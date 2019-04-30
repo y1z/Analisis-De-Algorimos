@@ -3,7 +3,7 @@
 // contructor por defecto . 
 Cronometro::Cronometro() {}
 
-// contructor sobrecargado valores [mc] [ms] [s]
+// contructor sobrecargado valores validos [mc] [ms] [s] [auto]
 Cronometro::Cronometro(std::string Indicador)
 {
 	if (Indicador == "mc") {
@@ -33,8 +33,8 @@ Cronometro::~Cronometro() {
 	if (m_Format == AUTO)
 	{
 		M_Fin = ::high_resolution_clock::now();
-		M_ResultadoPorDefecto = M_Fin - M_Inicio;
-		std::cout << "El Timepo Fue " << M_ResultadoPorDefecto.count() << " s";
+		M_Resultado = M_Fin - M_Inicio;
+		std::cout << "El Timepo Fue " << M_Resultado.count() << " s";
 	}
 }
 
@@ -49,7 +49,7 @@ void Cronometro::EndTimer()
 {
 
 	M_Fin = ::high_resolution_clock::now();//<= consigo el timepo final 
-	M_ResultadoPorDefecto = M_Fin - M_Inicio;//<= el resultado 
+	M_Resultado = M_Fin - M_Inicio;//<= el resultado 
 
 
 	switch (m_Format)
@@ -59,17 +59,17 @@ void Cronometro::EndTimer()
 		break;
 
 	case(Segundo):
-		M_Segundos = std::chrono::duration_cast<std::chrono::seconds>(M_ResultadoPorDefecto);
+		M_Segundos = std::chrono::duration_cast<std::chrono::seconds>(M_Resultado);
 		PrintResultado();
 		break;
 
 	case(Milisegundos):
-		M_miliSegundos = std::chrono::duration_cast<std::chrono::milliseconds>(M_ResultadoPorDefecto);
+		M_miliSegundos = std::chrono::duration_cast<std::chrono::milliseconds>(M_Resultado);
 		PrintResultado();
 		break;
 
 	case(Macrosegundos):
-		M_macroSegundos = std::chrono::duration_cast<std::chrono::microseconds>(M_ResultadoPorDefecto);
+		M_macroSegundos = std::chrono::duration_cast<std::chrono::microseconds>(M_Resultado);
 		PrintResultado();
 		break;
 
@@ -86,7 +86,7 @@ void Cronometro::PrintResultado() {
 	switch (m_Format)
 	{
 	case(Defecto):
-		std::cout << "El Timepo fue " << M_ResultadoPorDefecto.count() << "s\n";
+		std::cout << "El Timepo fue " << M_Resultado.count() << "s\n";
 		break;
 	case(Segundo):
 		if (M_Segundos.count() == 1)
@@ -113,7 +113,7 @@ void Cronometro::PrintResultado() {
 		}
 		break;
 	default:
-		std::cout << "El Timepo fue " << M_ResultadoPorDefecto.count() << " s";
+		std::cout << "El Timepo fue " << M_Resultado.count() << " s";
 		break;
 	}
 }
