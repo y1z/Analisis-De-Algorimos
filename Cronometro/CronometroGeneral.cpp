@@ -105,20 +105,26 @@ void Cronometro::PrintResultado() {
 
 		if (M_macroSegundos.count() == 1)
 		{
-			std::cout << "El Tiempo fue " << M_macroSegundos.count() << " MacroSegundo";
+			std::cout << "El Tiempo fue " << M_macroSegundos.count() << " MacroSegundo \n";
 		}
 		else
 		{
-			std::cout << "El Tiempo fue " << M_macroSegundos.count() << " MacroSegundos";
+			std::cout << "El Tiempo fue " << M_macroSegundos.count() << " MacroSegundos \n";
 		}
 		break;
 	default:
 		std::cout << "El Timepo fue " << M_Resultado.count() << " s";
 		break;
 	}
+	// Reseting the Timer
+	M_Inicio.min();
+	M_Fin.min();
+	
 }
 
 void Cronometro::ChoseTimerMeasurement(std::string Indicador) {
+
+
 	if (Indicador == "mc") {
 		m_Format = Macrosegundos;
 	}
@@ -129,7 +135,8 @@ void Cronometro::ChoseTimerMeasurement(std::string Indicador) {
 		m_Format = Segundo;
 	}
 	else {
-		std::cout << "error no reconosco la medicion de timepo que me indicaste\n El tiempo se presentara de la forma por defecto de presentacion. \n preciona enter";
+		std::cout << "error no reconosco el formato que pasaste aqui una lista de formatos valido \n";
+		std::cout << "1. [mc]\n 2. [ms] \n 3. [s]";
 		std::cin.ignore();
 		std::cin.get();
 	}

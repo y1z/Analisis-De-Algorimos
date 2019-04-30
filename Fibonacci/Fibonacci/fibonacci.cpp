@@ -9,6 +9,7 @@
 //! Here the Recursive version of the Fibonacci sequence
 int RecursiveFibonacci(int Index)
 {
+	//! this is for handling exceptions
 	if (Index == 0) { return 0; }
 	
 	if (Index == 1)
@@ -24,21 +25,25 @@ int RecursiveFibonacci(int Index)
 }
 
 int NonRecursiveFibonacci(int Index) {
-	//! 
-	int firstValue = 0;
+	//! this are just the first 2 values of Fibonacci
+	int FirstValue = 0;
 	int SecondValue = 1;
 	
-	int NewValue = 0;
+	int Result = 0;
 
-	if (Index == 1) { return firstValue; }
+	if (Index == 1) { return FirstValue; }
 	if (Index == 2) { return SecondValue; }
 
-	for (int i = 0; i < Index; ++i) {
+	// I'm subtracting 2 from index because it would give me 
+	// a correct, but it would be 2 ahead of the recursive function
+	for (int i = 0; i < Index- 2; ++i) {
 		
-
-
+		Result = FirstValue + SecondValue;
+		FirstValue = SecondValue;
+		SecondValue = Result;
 	}
-	return NewValue;
+
+	return Result;
 }
 
 
@@ -46,8 +51,13 @@ int NonRecursiveFibonacci(int Index) {
 void main() {
 	/*! will measure the time it takes the recursive version to finish*/
 	Cronometro TimerRecursive;
-
+	/*! will measure the time ti takes the Iterative version to finish*/
 	Cronometro TimerIterative;
+
+	TimerRecursive.ChoseTimerMeasurement("mc");
+	TimerIterative.ChoseTimerMeasurement("mc");
+
+	
 
 	int UserInput = 0;
 	int ResultRecursive = 0;
@@ -57,9 +67,18 @@ void main() {
 	{
 		printf("Pleas input which number of the Fibonacci sequence you would like \n");
 		std::cin >> UserInput;
-		ResultRecursive = RecursiveFibonacci(UserInput);
-		printf("Heres the Result [%d]\n",ResultRecursive);
 
+		//! timing the Recursive Version 
+		TimerRecursive.StartTimer();
+		ResultRecursive = RecursiveFibonacci(UserInput);
+		printf("Heres the Result for the Recursive Function [%d]\n",ResultRecursive);
+		TimerRecursive.EndTimer();
+
+		//! timing the Iterative Version
+		TimerIterative.StartTimer();
+		ResultIterative = NonRecursiveFibonacci(UserInput);
+		printf("Heres the Result for the Iterative Function [%d]\n", ResultIterative);
+		TimerIterative.EndTimer();
 	}
 
 }
