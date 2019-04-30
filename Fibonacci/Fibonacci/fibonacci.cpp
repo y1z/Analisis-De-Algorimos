@@ -49,13 +49,6 @@ int NonRecursiveFibonacci(int Index) {
 
 
 void main() {
-	/*! will measure the time it takes the recursive version to finish*/
-	Cronometro TimerRecursive;
-	/*! will measure the time ti takes the Iterative version to finish*/
-	Cronometro TimerIterative;
-
-	TimerRecursive.ChoseTimerMeasurement("mc");
-	TimerIterative.ChoseTimerMeasurement("mc");
 
 	
 
@@ -65,8 +58,17 @@ void main() {
 
 	while (true)
 	{
+		
 		printf("Pleas input which number of the Fibonacci sequence you would like \n");
 		std::cin >> UserInput;
+
+		/*! will measure the time it takes the recursive version to finish*/
+		Cronometro TimerRecursive;
+		/*! will measure the time ti takes the Iterative version to finish*/
+		Cronometro TimerIterative;
+
+		TimerRecursive.ChoseTimerMeasurement("ms");
+		TimerIterative.ChoseTimerMeasurement("ms");
 
 		//! timing the Recursive Version 
 		TimerRecursive.StartTimer();
