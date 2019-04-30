@@ -38,8 +38,8 @@ private:
 	{
 		AUTO = -1,
 		Normal = 0,// Es indica al objecto lo que hace por defecto . 
-		Macrosegundos = 1,// Indica al objecto que va a sacar el timepo en Macrosegundos  
-		Milisegundos = 2,// Indica al objecto que va a sacar el tiempo en Milisegundos 
+		MicroSegundos = 1,// Indica al objecto que va a sacar el timepo en Macrosegundos  
+		MiliSegundos = 2,// Indica al objecto que va a sacar el tiempo en Milisegundos 
 		Segundo = 3// Indica al objecto que va a sacar el tiempo en Segundos .
 	};
 

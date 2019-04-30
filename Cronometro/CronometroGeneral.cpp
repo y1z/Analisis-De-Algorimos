@@ -7,10 +7,10 @@ Cronometro::Cronometro() {}
 Cronometro::Cronometro(std::string Indicador)
 {
 	if (Indicador == "mc") {
-		m_Format = Macrosegundos;
+		m_Format = MicroSegundos;
 	}
 	else if (Indicador == "ms") {
-		m_Format = Milisegundos;
+		m_Format = MiliSegundos;
 	}
 	else if (Indicador == "s") {
 		m_Format = Segundo;
@@ -32,44 +32,44 @@ Cronometro::Cronometro(std::string Indicador)
 Cronometro::~Cronometro() {
 	if (m_Format == AUTO)
 	{
-		M_Fin = ::high_resolution_clock::now();
-		M_Resultado = M_Fin - M_Inicio;
-		std::cout << "El Timepo Fue " << M_Resultado.count() << " s";
+		m_Fin = ::high_resolution_clock::now();
+		m_Resultado = m_Fin - m_Inicio;
+		std::cout << "El Timepo Fue " << m_Resultado.count() << " s";
 	}
 }
 
 // para Iniciar el conteo del timepo 
 void Cronometro::StartTimer()
 {
-	M_Inicio = ::high_resolution_clock::now();//<= consigo el timepo del inicio 
+	m_Inicio = ::high_resolution_clock::now();//<= consigo el timepo del inicio 
 }
 
 // para Finaliza el conteo del tiempo 
 void Cronometro::EndTimer()
 {
 
-	M_Fin = ::high_resolution_clock::now();//<= consigo el timepo final 
-	M_Resultado = M_Fin - M_Inicio;//<= el resultado 
+	m_Fin = ::high_resolution_clock::now();//<= consigo el timepo final 
+	m_Resultado = m_Fin - m_Inicio;//<= el resultado 
 
 
 	switch (m_Format)
 	{
-	case(Defecto):
+	case(Normal):
 		PrintResultado();
 		break;
 
 	case(Segundo):
-		M_Segundos = std::chrono::duration_cast<std::chrono::seconds>(M_Resultado);
+		m_Segundos = std::chrono::duration_cast<std::chrono::seconds>(m_Resultado);
 		PrintResultado();
 		break;
 
-	case(Milisegundos):
-		M_miliSegundos = std::chrono::duration_cast<std::chrono::milliseconds>(M_Resultado);
+	case(MiliSegundos):
+		m_miliSegundo = std::chrono::duration_cast<std::chrono::milliseconds>(m_Resultado);
 		PrintResultado();
 		break;
 
-	case(Macrosegundos):
-		M_macroSegundos = std::chrono::duration_cast<std::chrono::microseconds>(M_Resultado);
+	case(MicroSegundos):
+		m_MicroSegundos = std::chrono::duration_cast<std::chrono::microseconds>(m_Resultado);
 		PrintResultado();
 		break;
 
@@ -85,51 +85,51 @@ void Cronometro::PrintResultado() {
 	// lo que hace este switch case es determinar cual Unidad de timepo presentar al usuario y imprimirlo en la consola.
 	switch (m_Format)
 	{
-	case(Defecto):
-		std::cout << "El Timepo fue " << M_Resultado.count() << "s\n";
+	case(Normal):
+		std::cout << "El Timepo fue " << m_Resultado.count() << "s\n";
 		break;
 	case(Segundo):
-		if (M_Segundos.count() == 1)
+		if (m_Segundos.count() == 1)
 		{
-			std::cout << "El Timepo fue " << M_Segundos.count() << " Segundo\n";
+			std::cout << "El Timepo fue " << m_Segundos.count() << " Segundo\n";
 		}
 		else
 		{
-			std::cout << "El Timepo fue " << M_Segundos.count() << " Segundos\n";
+			std::cout << "El Timepo fue " << m_Segundos.count() << " Segundos\n";
 		}
 		break;
-	case(Milisegundos):
-		std::cout << "El Tiempo fue " << M_miliSegundos.count() << " ms\n";
+	case(MiliSegundos):
+		std::cout << "El Tiempo fue " << m_miliSegundo.count() << " ms\n";
 		break;
-	case(Macrosegundos):
+	case(MicroSegundos):
 
-		if (M_macroSegundos.count() == 1)
+		if (m_MicroSegundos.count() == 1)
 		{
-			std::cout << "El Tiempo fue " << M_macroSegundos.count() << " MacroSegundo \n";
+			std::cout << "El Tiempo fue " << m_MicroSegundos.count() << " MicroSegundos \n";
 		}
 		else
 		{
-			std::cout << "El Tiempo fue " << M_macroSegundos.count() << " MacroSegundos \n";
+			std::cout << "El Tiempo fue " << m_MicroSegundos.count() << " MicroSegundos \n";
 		}
 		break;
 	default:
-		std::cout << "El Timepo fue " << M_Resultado.count() << " s";
+		std::cout << "El Timepo fue " << m_Resultado.count() << " s";
 		break;
 	}
 	// Reseting the Timer
-	M_Inicio.min();
-	M_Fin.min();
-	
+	m_Inicio.min();
+	m_Fin.min();
+
 }
 
 void Cronometro::ChoseTimerMeasurement(std::string Indicador) {
 
 
 	if (Indicador == "mc") {
-		m_Format = Macrosegundos;
+		m_Format = MicroSegundos;
 	}
 	else if (Indicador == "ms") {
-		m_Format = Milisegundos;
+		m_Format = MiliSegundos;
 	}
 	else if (Indicador == "s") {
 		m_Format = Segundo;
