@@ -120,6 +120,10 @@ void Cronometro::PrintResultado() {
 	m_Inicio.min();
 	m_Fin.min();
 
+	m_Resultado.zero();
+	m_MicroSegundos.zero();
+	m_miliSegundo.zero();
+
 }
 
 void Cronometro::ChoseTimerMeasurement(std::string Indicador) {
@@ -143,4 +147,3 @@ void Cronometro::ChoseTimerMeasurement(std::string Indicador) {
 
 
 }
-
