@@ -1,9 +1,11 @@
 #include <iostream>
-#include "..//..//Cronometro/CronometroGeneral.h"
+#include "..//..//Timer/Timer.h"
 
 /*Fibonacci --- Yhaliff Said Barraza Zubia */
-/**
-*@note I'm beginning the sequence with the number 0.
+
+/*!
+\note I'm starting the Fibonacci sequence from 0
+\author Yhaliff Said Barraza
 */
 
 //! Here the Recursive version of the Fibonacci sequence
@@ -46,7 +48,7 @@ int NonRecursiveFibonacci(int Index) {
 
 
 
-void main() {
+int main() {
 
 	int UserInput = 0;
 	int ResultRecursive = 0;
@@ -59,24 +61,22 @@ void main() {
 		std::cin >> UserInput;
 
 		/*! will measure the time it takes the recursive version to finish*/
-		Cronometro TimerRecursive;
+		Timer TimerRecursive;
 		/*! will measure the time ti takes the Iterative version to finish*/
-		Cronometro TimerIterative;
-
-		TimerRecursive.ChoseTimerMeasurement("ms");
-		TimerIterative.ChoseTimerMeasurement("ms");
+		Timer TimerIterative;
 
 		//! timing the Recursive Version 
-		TimerRecursive.StartTimer();
+		TimerRecursive.StartTiming();
 		ResultRecursive = RecursiveFibonacci(UserInput);
 		printf("Heres the Result for the Recursive Function [%d]\n", ResultRecursive);
-		TimerRecursive.EndTimer();
+		TimerRecursive.EndTiming();
 
 		//! timing the Iterative Version
-		TimerIterative.StartTimer();
+		TimerIterative.StartTiming();
 		ResultIterative = NonRecursiveFibonacci(UserInput);
 		printf("Heres the Result for the Iterative Function [%d]\n", ResultIterative);
-		TimerIterative.EndTimer();
+		TimerIterative.EndTiming();
 	}
 
+	return 0;
 }

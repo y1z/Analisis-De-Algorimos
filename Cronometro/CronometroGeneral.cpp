@@ -1,7 +1,10 @@
 #include "CronometroGeneral.h"
 
 // contructor por defecto . 
-Cronometro::Cronometro() {}
+Cronometro::Cronometro() 
+{
+	m_Resultado.zero();
+}
 
 // contructor sobrecargado valores validos [mc] [ms] [s] [auto]
 Cronometro::Cronometro(std::string Indicador)
