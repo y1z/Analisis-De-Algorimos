@@ -3,7 +3,7 @@
 #include <chrono>
 
 Timer::Timer()
-{
+{	// this init this value 
 	m_Result = std::chrono::seconds(0);
 }
 

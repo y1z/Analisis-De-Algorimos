@@ -1,7 +1,10 @@
 #pragma once
 #include <chrono>
 #include <cinttypes>
-
+/*!
+ * \author Yhaliff said Barraza Zubia 
+ *
+ * */
 class Timer
 {
 	/*! used for measuring durations in terms of picoseconds*/
