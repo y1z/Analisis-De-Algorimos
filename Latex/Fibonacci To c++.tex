@@ -1,0 +1,85 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+% this package is for entering code in latex 
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{JustGreen}{rgb}{0,0.6,0}
+
+% need to define this 2 first before calling maketitle in the document 
+\author{Yhaliff Said Barraza}
+\title{Converting Fibonacci To c++}
+
+%settings for presenting code 
+\lstset{ 
+  language=C++,
+  keywordstyle=\color{blue}, %color of the keywords 
+  tabsize=2,
+  commentstyle=\color{JustGreen},
+     frame=L,
+}
+
+\begin{document}
+\maketitle
+
+\section{Fibonacci sequence}
+Here is 1 of the formulas for finding a number in the \textbf{Fibonacci sequence}  
+
+$$ X_n = X_{n-1} + X_{n-2 } \quad n > 1$$
+
+Now lets convert this to \textbf{C++}, First will use recursion to find the number $X_n$
+
+
+\subsection{Code Recursion Fibonacci}
+
+\textbf{Note :} using this function with \textit{input value} below 35 will be relatively fast however once the \textit{input value} become bigger than 40 than you going to start to wait for some time.
+\begin{lstlisting}
+int RecursiveFibonacci(int Index)
+{
+	//! this is for handling exceptions
+	if (Index == 0) { return 0; }
+
+	if (Index == 1)
+	{
+		return 0;
+	}
+	else if (Index == 2) {
+		return 1;
+	}
+	return RecursiveFibonacci(Index - 1) + RecursiveFibonacci(Index - 2);
+}
+\end{lstlisting}
+
+\textbf{Note :} There is a faster way to get the value $X_n$ than the one above using interactions en place of recursion
+
+% Iterative version
+\subsection{Code Iterative Fibonacci }
+
+\begin{lstlisting} 
+int NonRecursiveFibonacci(int Index) {
+	//! this are just the first 2 values of Fibonacci
+	int FirstValue = 0;
+	int SecondValue = 1;
+
+	int Result = 0;
+
+	if (Index == 1) { return FirstValue; }
+	if (Index == 2) { return SecondValue; }
+
+	// I'm subtracting 2 from index because it would give me 
+	// a correct number, but it would be 2 ahead of the recursive function
+	for (int i = 0; i < Index - 2; ++i) {
+
+		Result = FirstValue + SecondValue;
+		FirstValue = SecondValue;
+		SecondValue = Result;
+	}
+
+	return Result;
+}
+\end{lstlisting}
+
+\end{document}
