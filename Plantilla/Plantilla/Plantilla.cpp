@@ -48,16 +48,26 @@ std::vector<int> GenerateVectorRandom(int Size)
 	return Result;
 }
 
+/*! Just to print every element of a vector */
+void PrintVector(const std::vector<int> &Vec) {
+	for (auto Element : Vec) {
+		printf("[%d] ", Element);
+	}
 
-int main() {
+}
+
+int main() 
+{
 	Timer timer;
 
 	timer.StartTiming();
 	std::vector<int> best = GenerateVectorAcendiente(600);
 	timer.EndTiming();
-	for (auto elemento : best) {
-		printf("[%d]", elemento);
-	}
+	timer.StartTiming();
+
+	PrintVector(best);
+
+	timer.EndTiming();
 	timer.GetResult();
 	return 0;
 }
