@@ -4,7 +4,7 @@
 #include "..//..//Timer/Timer.h"
 
 /*! output of the vector is 1,2,3,4,5,6,7,8,9 etc...*/
-std::vector<int> GenerateVectorAcendiente(int Size)
+std::vector<int> GenerateVectorAscendentOrder(int Size)
 {
 	std::vector<int> Result;
 
@@ -12,14 +12,13 @@ std::vector<int> GenerateVectorAcendiente(int Size)
 
 	for (int i = 0; i < Size; ++i) {
 		Result.push_back(i);
-
 	}
 
 	return Result;
 }
 
 /*! output of the vector is 9,8,7,6,5,4,3,2,1*/
-std::vector<int> GenerateVectorDecendent(int Size)
+std::vector<int> GenerateVectorDescendantOrder(int Size)
 {
 	std::vector<int> Result;
 
@@ -27,14 +26,13 @@ std::vector<int> GenerateVectorDecendent(int Size)
 
 	for (int i = 0; i < Size; ++i) {
 		Result.push_back(Size - i);
-
 	}
 
 	return Result;
 }
 
 /*! every element of the vector is random*/
-std::vector<int> GenerateVectorRandom(int Size)
+std::vector<int> GenerateVectorRandomOrder(int Size)
 {
 	std::vector<int> Result;
 
@@ -48,26 +46,62 @@ std::vector<int> GenerateVectorRandom(int Size)
 	return Result;
 }
 
+/*! to swap 2 elements*/
+void Swap(int &LeftSideValue, int &RightSideValue)
+{
+	int Temp = LeftSideValue;
+	LeftSideValue = RightSideValue;
+	RightSideValue = Temp;
+}
+
+/*! this is an my version of bubbleSort*/
+void BubbleSort(std::vector<int> &Vec) 
+{
+	//! to not have to sort an necessarily
+	bool isSorted = true;
+
+		for (auto Elemento : Vec) 
+		{
+			for (int j = 0; j < Vec.size() - 1; ++j)
+			{
+				if (Vec[j] > Vec[j + 1]) {
+					Swap(Vec[j], Vec[j + 1]);
+					isSorted = false;
+				}
+			}
+			
+			if (isSorted) { break; }
+
+			isSorted = true;
+		}
+}
+
+
 /*! Just to print every element of a vector */
 void PrintVector(const std::vector<int> &Vec) {
 	for (auto Element : Vec) {
 		printf("[%d] ", Element);
 	}
-
+	printf("\n");
 }
 
-int main() 
+
+int main()
 {
 	Timer timer;
 
-	timer.StartTiming();
-	std::vector<int> best = GenerateVectorAcendiente(600);
-	timer.EndTiming();
-	timer.StartTiming();
+	std::vector<int> TestVector = GenerateVectorDescendantOrder(2000);
 
-	PrintVector(best);
+	printf("Here is the Vector before being sorted \n");
 
+	PrintVector(TestVector);
+	timer.StartTiming();
+	BubbleSort(TestVector);
 	timer.EndTiming();
+
+	printf("Here is the Vector After being sorted \n");
+
+	PrintVector(TestVector);
 	timer.GetResult();
 	return 0;
 }
