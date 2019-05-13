@@ -57,7 +57,7 @@ void Swap(int &LeftSideValue, int &RightSideValue)
 /*! this is an my version of bubbleSort*/
 void BubbleSort(std::vector<int> &Vec) 
 {
-	//! to not have to sort an necessarily
+	// to not have to sort an necessarily
 	bool isSorted = true;
 
 		for (auto Elemento : Vec) 
@@ -66,7 +66,7 @@ void BubbleSort(std::vector<int> &Vec)
 			{
 				if (Vec[j] > Vec[j + 1]) {
 					Swap(Vec[j], Vec[j + 1]);
-					isSorted = false;
+					//isSorted = false;
 				}
 			}
 			
@@ -75,7 +75,25 @@ void BubbleSort(std::vector<int> &Vec)
 			isSorted = true;
 		}
 }
+/*! this is an implementation of Insertion-sort*/
+void InsertionSort(std::vector<int> &Vec)
+{
+	for (int i = Vec.size() - 1; i > 0; --i) {
 
+		if (Vec[i] < Vec[i - 1])
+		{
+			// this is so we don't go out of bounds 
+			int CurrentPos = i;
+			// making sure we don't go out of bonds
+			while (CurrentPos <= (Vec.size() - 1) && Vec[CurrentPos] < Vec[CurrentPos - 1])
+			{
+				Swap(Vec[CurrentPos - 1], Vec[CurrentPos]);
+				
+				CurrentPos++;
+			}
+		}
+	}
+}
 
 /*! Just to print every element of a vector */
 void PrintVector(const std::vector<int> &Vec) {
@@ -90,13 +108,13 @@ int main()
 {
 	Timer timer;
 
-	std::vector<int> TestVector = GenerateVectorDescendantOrder(2000);
+	std::vector<int> TestVector = GenerateVectorDescendantOrder(100);
 
 	printf("Here is the Vector before being sorted \n");
 
 	PrintVector(TestVector);
 	timer.StartTiming();
-	BubbleSort(TestVector);
+	InsertionSort(TestVector);
 	timer.EndTiming();
 
 	printf("Here is the Vector After being sorted \n");
