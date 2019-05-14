@@ -1,6 +1,7 @@
 #include <vector>
 #include <random>
 #include <chrono>
+#include <fstream>
 #include "..//..//Timer/Timer.h"
 
 /*! output of the vector is 1,2,3,4,5,6,7,8,9 etc...*/
@@ -66,7 +67,7 @@ void BubbleSort(std::vector<int> &Vec)
 			{
 				if (Vec[j] > Vec[j + 1]) {
 					Swap(Vec[j], Vec[j + 1]);
-					//isSorted = false;
+					isSorted = false;
 				}
 			}
 			
@@ -75,6 +76,7 @@ void BubbleSort(std::vector<int> &Vec)
 			isSorted = true;
 		}
 }
+
 /*! this is an implementation of Insertion-sort*/
 void InsertionSort(std::vector<int> &Vec)
 {
@@ -88,12 +90,13 @@ void InsertionSort(std::vector<int> &Vec)
 			while (CurrentPos <= (Vec.size() - 1) && Vec[CurrentPos] < Vec[CurrentPos - 1])
 			{
 				Swap(Vec[CurrentPos - 1], Vec[CurrentPos]);
-				
 				CurrentPos++;
 			}
 		}
 	}
 }
+
+
 
 /*! Just to print every element of a vector */
 void PrintVector(const std::vector<int> &Vec) {
@@ -102,13 +105,71 @@ void PrintVector(const std::vector<int> &Vec) {
 	}
 	printf("\n");
 }
+/*! my own type def of a function pointer */
+using FunctionPointer = void(*)(std::vector<int>&);
 
+/*! write to a file for later use */
+void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue)
+{
+	std::ofstream ResultFile;
+	Timer timer;
+	ResultFile.open("ResultFile.txt", std::ios::app);
+	// for reseting the original value
+	uint32_t StratingValueCopy = StratingValue;
+
+	ResultFile << "Case Omega :";
+	// big Omega 
+	for (int i = 0; i < 10; ++i)
+	{
+		std::vector<int> BestCaseVector = GenerateVectorAscendentOrder(StratingValue);
+		timer.StartTiming();
+		SortingFunction(BestCaseVector);
+		timer.EndTiming();
+		ResultFile << timer.GetResultMiliSeconds() << '\t';
+		StratingValue += 200;
+	}
+	ResultFile << '\n';
+	StratingValue = StratingValueCopy;
+
+	ResultFile << "Case Theta :";
+		for (int i = 0; i < 10; ++i)
+		{
+			std::vector<int> AvergeCaseVector = GenerateVectorRandomOrder(StratingValue);
+			timer.StartTiming();
+			SortingFunction(AvergeCaseVector);
+			timer.EndTiming();
+			ResultFile << timer.GetResultMiliSeconds() << '\t';
+			StratingValue += 200;
+		}
+		ResultFile << '\n';
+		StratingValue = StratingValueCopy;
+
+		ResultFile << "Case Big O :";
+		for (int i = 0; i < 10; ++i)
+		{
+			std::vector<int> WorstCaseVector = GenerateVectorDescendantOrder(StratingValue);
+			timer.StartTiming();
+			SortingFunction(WorstCaseVector);
+			timer.EndTiming();
+			ResultFile << timer.GetResultMiliSeconds() << '\t';
+			StratingValue += 200;
+		}
+		ResultFile << "\n\n";
+	ResultFile.close();
+}
 
 int main()
 {
 	Timer timer;
+	FunctionPointer ptr_BubbleSort = BubbleSort;
+	FunctionPointer ptr_InsertionSort = InsertionSort;
+	std::vector<int> TestVector = GenerateVectorDescendantOrder(2500);
 
-	std::vector<int> TestVector = GenerateVectorDescendantOrder(100);
+	uint32_t TestingAmount = 300;
+	
+	BeachMarking(ptr_BubbleSort, TestingAmount);
+
+	BeachMarking(ptr_InsertionSort, TestingAmount);
 
 	printf("Here is the Vector before being sorted \n");
 

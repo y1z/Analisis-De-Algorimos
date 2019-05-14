@@ -4,7 +4,7 @@
 /*!
  * \author Yhaliff said Barraza Zubia 
  *
- * */
+ **/
 class Timer
 {
 	/*! used for measuring durations in terms of picoseconds*/
@@ -25,6 +25,7 @@ public: // functions
 	void StartTiming();
 	void EndTiming();
 	uint64_t GetResult();
+	uint64_t GetResultMiliSeconds();
 private:
 	void PrintResult();
 

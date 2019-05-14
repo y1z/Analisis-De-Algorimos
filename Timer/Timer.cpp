@@ -47,3 +47,9 @@ uint64_t Timer::GetResult()
 {
 	return m_Result.count();
 }
+
+uint64_t Timer::GetResultMiliSeconds()
+{
+	std::chrono::milliseconds Milisecons = std::chrono::duration_cast<std::chrono::milliseconds>(m_Result);
+	return Milisecons.count();
+}
