@@ -48,6 +48,13 @@ uint64_t Timer::GetResult()
 	return m_Result.count();
 }
 
+uint64_t Timer::GetResultMicroSeconds()
+{
+	std::chrono::microseconds ElapsedTime = std::chrono::duration_cast<std::chrono::microseconds>(m_Result);
+
+	return ElapsedTime.count();
+}
+
 uint64_t Timer::GetResultMiliSeconds()
 {
 	std::chrono::milliseconds Milisecons = std::chrono::duration_cast<std::chrono::milliseconds>(m_Result);

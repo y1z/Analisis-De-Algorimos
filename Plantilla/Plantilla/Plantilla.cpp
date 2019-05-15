@@ -117,7 +117,20 @@ void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue)
 	// for reseting the original value
 	uint32_t StratingValueCopy = StratingValue;
 
-	ResultFile << "Case Omega :";
+	ResultFile << "Case Theta : ";
+	for (int i = 0; i < 10; ++i)
+	{
+		std::vector<int> AvergeCaseVector = GenerateVectorRandomOrder(StratingValue);
+		timer.StartTiming();
+		SortingFunction(AvergeCaseVector);
+		timer.EndTiming();
+		ResultFile << timer.GetResultMicroSeconds() << '\t';
+		StratingValue += 200;
+	}
+	ResultFile << '\n';
+	StratingValue = StratingValueCopy;
+
+	ResultFile << "Case Omega : ";
 	// big Omega 
 	for (int i = 0; i < 10; ++i)
 	{
@@ -125,33 +138,20 @@ void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue)
 		timer.StartTiming();
 		SortingFunction(BestCaseVector);
 		timer.EndTiming();
-		ResultFile << timer.GetResultMiliSeconds() << '\t';
+		ResultFile << timer.GetResultMicroSeconds() << '\t';
 		StratingValue += 200;
 	}
 	ResultFile << '\n';
 	StratingValue = StratingValueCopy;
 
-	ResultFile << "Case Theta :";
-		for (int i = 0; i < 10; ++i)
-		{
-			std::vector<int> AvergeCaseVector = GenerateVectorRandomOrder(StratingValue);
-			timer.StartTiming();
-			SortingFunction(AvergeCaseVector);
-			timer.EndTiming();
-			ResultFile << timer.GetResultMiliSeconds() << '\t';
-			StratingValue += 200;
-		}
-		ResultFile << '\n';
-		StratingValue = StratingValueCopy;
-
-		ResultFile << "Case Big O :";
+		ResultFile << "Case Big O : ";
 		for (int i = 0; i < 10; ++i)
 		{
 			std::vector<int> WorstCaseVector = GenerateVectorDescendantOrder(StratingValue);
 			timer.StartTiming();
 			SortingFunction(WorstCaseVector);
 			timer.EndTiming();
-			ResultFile << timer.GetResultMiliSeconds() << '\t';
+			ResultFile << timer.GetResultMicroSeconds() << '\t';
 			StratingValue += 200;
 		}
 		ResultFile << "\n\n";
@@ -163,13 +163,13 @@ int main()
 	Timer timer;
 	FunctionPointer ptr_BubbleSort = BubbleSort;
 	FunctionPointer ptr_InsertionSort = InsertionSort;
-	std::vector<int> TestVector = GenerateVectorDescendantOrder(2500);
+	std::vector<int> TestVector = GenerateVectorDescendantOrder(10);
 
 	uint32_t TestingAmount = 300;
 	
-	BeachMarking(ptr_BubbleSort, TestingAmount);
+	/*BeachMarking(ptr_BubbleSort, TestingAmount);
 
-	BeachMarking(ptr_InsertionSort, TestingAmount);
+	BeachMarking(ptr_InsertionSort, TestingAmount);*/
 
 	printf("Here is the Vector before being sorted \n");
 

@@ -3,7 +3,8 @@
 #include <cinttypes>
 /*!
  * \author Yhaliff said Barraza Zubia 
- *
+ * \brief measures time and prints to the screen can also receive the time 
+ elapsed in other time measurement.
  **/
 class Timer
 {
@@ -25,6 +26,7 @@ public: // functions
 	void StartTiming();
 	void EndTiming();
 	uint64_t GetResult();
+	uint64_t GetResultMicroSeconds();
 	uint64_t GetResultMiliSeconds();
 private:
 	void PrintResult();
