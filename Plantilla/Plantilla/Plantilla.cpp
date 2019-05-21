@@ -3,49 +3,8 @@
 #include <chrono>
 #include <fstream>
 #include "..//..//Timer/Timer.h"
-
-/*! output of the vector is 1,2,3,4,5,6,7,8,9 etc...*/
-std::vector<int> GenerateVectorAscendentOrder(int Size)
-{
-	std::vector<int> Result;
-
-	Result.reserve(Size);
-
-	for (int i = 0; i < Size; ++i) {
-		Result.push_back(i);
-	}
-
-	return Result;
-}
-
-/*! output of the vector is 9,8,7,6,5,4,3,2,1*/
-std::vector<int> GenerateVectorDescendantOrder(int Size)
-{
-	std::vector<int> Result;
-
-	Result.reserve(Size);
-
-	for (int i = 0; i < Size; ++i) {
-		Result.push_back(Size - i);
-	}
-
-	return Result;
-}
-
-/*! every element of the vector is random*/
-std::vector<int> GenerateVectorRandomOrder(int Size)
-{
-	std::vector<int> Result;
-
-	Result.reserve(Size);
-	srand(time(0));
-
-	for (int i = 0; i < Size; ++i) {
-		Result.push_back(rand());
-	}
-
-	return Result;
-}
+#include "UtilityFunctions.h"
+void BuildMaxHeap(std::vector<int> &Vec, int CurrentPlace, int Limit);
 
 /*! to swap 2 elements*/
 void Swap(int &LeftSideValue, int &RightSideValue)
@@ -56,32 +15,33 @@ void Swap(int &LeftSideValue, int &RightSideValue)
 }
 
 /*! this is an my version of bubbleSort*/
-void BubbleSort(std::vector<int> &Vec) 
+void BubbleSort(std::vector<int> &Vec)
 {
 	// to not have to sort an necessarily
 	bool isSorted = true;
 
-		for (auto Elemento : Vec) 
+	for (auto Elemento : Vec)
+	{
+		for (int j = 0; j < Vec.size() - 1; ++j)
 		{
-			for (int j = 0; j < Vec.size() - 1; ++j)
+			if (Vec[j] > Vec[j + 1])
 			{
-				if (Vec[j] > Vec[j + 1]) {
-					Swap(Vec[j], Vec[j + 1]);
-					isSorted = false;
-				}
+				Swap(Vec[j], Vec[j + 1]);
+				isSorted = false;
 			}
-			
-			if (isSorted) { break; }
-
-			isSorted = true;
 		}
+
+		if (isSorted) { break; }
+
+		isSorted = true;
+	}
 }
 
 /*! this is an implementation of Insertion-sort*/
 void InsertionSort(std::vector<int> &Vec)
 {
-	for (int i = Vec.size() - 1; i > 0; --i) {
-
+	for (int i = Vec.size() - 1; i > 0; --i)
+	{
 		if (Vec[i] < Vec[i - 1])
 		{
 			// this is so we don't go out of bounds 
@@ -95,16 +55,85 @@ void InsertionSort(std::vector<int> &Vec)
 		}
 	}
 }
+/*!This is an implementation of HeapSort*/
+void HeapSort(std::vector<int> &Vec)
+{
+	// Building a max heap 
+	uint32_t HeapLimit = Vec.size() - 1;
+	uint32_t OrderedSection = 0;
 
-
-
-/*! Just to print every element of a vector */
-void PrintVector(const std::vector<int> &Vec) {
-	for (auto Element : Vec) {
-		printf("[%d] ", Element);
+	for (int i = Vec.size() /2 ; i >= 0; --i)
+	{
+		BuildMaxHeap(Vec, i, HeapLimit);
+		//Swap(Vec[HeapLimit], Vec[OrderedSection]);
+		//printf("Order : ");
+		//PrintVector(Vec);
+		//OrderedSection++;
+		//HeapLimit--;
 	}
-	printf("\n");
+
 }
+
+void BuildMaxHeap(std::vector<int> &Vec, int CurrentPlace, int Limit)
+{
+	/*!
+ 2*i+1 //<- get the left node
+ 2*i+2 //<- get the right node
+ i/2-1 //<- get the parent node
+ **/
+ // child
+	int GetLeftChild = (2 * CurrentPlace) + 1;
+	int GetRightChild = (2 * CurrentPlace) + 2;
+	int GetParent = (CurrentPlace - 1) / 2;
+
+	uint32_t BiggestNumberPlace = CurrentPlace;
+
+	printf("entering :");
+	PrintVector(Vec);
+
+	//if (CurrentPlace > 0)
+	//{
+
+	//	if (Vec[GetParent] < Vec[CurrentPlace])
+	//	{
+	//		printf("Swaping : %d , %d \n", Vec[GetParent], Vec[CurrentPlace]);
+	//		Swap(Vec[GetParent], Vec[CurrentPlace]);
+	//		BuildMaxHeap(Vec, GetParent, Limit);
+	//	}
+
+	//}
+	//if (BiggestNumberPlace != 0 && Vec[GetParent] < Vec[BiggestNumberPlace])
+	//{
+	//	BiggestNumberPlace = GetParent;
+	//}
+
+	if (GetRightChild <= Limit && Vec[GetRightChild] > Vec[BiggestNumberPlace])
+	{
+		BiggestNumberPlace = GetRightChild;
+
+		//printf("\nSwaping : %d , %d \n", Vec[GetRightChild], Vec[CurrentPlace]);
+		//Swap(Vec[GetRightChild], Vec[CurrentPlace]);
+		//BuildMaxHeap(Vec, GetRightChild, Limit);
+	}
+
+	if (GetLeftChild <= Limit && Vec[GetLeftChild] > Vec[BiggestNumberPlace])
+	{
+		BiggestNumberPlace = GetLeftChild;
+		//printf("\nSwaping : %d , %d \n", Vec[GetLeftChild], Vec[CurrentPlace]);
+		//Swap(Vec[GetLeftChild], Vec[CurrentPlace]);
+		//BuildMaxHeap(Vec, GetLeftChild, Limit);
+	//	BuildMaxHeap(Vec, CurrentPlace, Limit);
+
+	}
+
+	if (CurrentPlace != BiggestNumberPlace)
+	{
+		Swap(Vec[CurrentPlace], Vec[BiggestNumberPlace]);
+		BuildMaxHeap(Vec, BiggestNumberPlace, Limit);
+	}
+
+}
+
 /*! my own type def of a function pointer */
 using FunctionPointer = void(*)(std::vector<int>&);
 
@@ -144,17 +173,17 @@ void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue)
 	ResultFile << '\n';
 	StratingValue = StratingValueCopy;
 
-		ResultFile << "Case Big O : ";
-		for (int i = 0; i < 10; ++i)
-		{
-			std::vector<int> WorstCaseVector = GenerateVectorDescendantOrder(StratingValue);
-			timer.StartTiming();
-			SortingFunction(WorstCaseVector);
-			timer.EndTiming();
-			ResultFile << timer.GetResultMicroSeconds() << '\t';
-			StratingValue += 200;
-		}
-		ResultFile << "\n\n";
+	ResultFile << "Case Big O : ";
+	for (int i = 0; i < 10; ++i)
+	{
+		std::vector<int> WorstCaseVector = GenerateVectorDescendantOrder(StratingValue);
+		timer.StartTiming();
+		SortingFunction(WorstCaseVector);
+		timer.EndTiming();
+		ResultFile << timer.GetResultMicroSeconds() << '\t';
+		StratingValue += 200;
+	}
+	ResultFile << "\n\n";
 	ResultFile.close();
 }
 
@@ -163,10 +192,12 @@ int main()
 	Timer timer;
 	FunctionPointer ptr_BubbleSort = BubbleSort;
 	FunctionPointer ptr_InsertionSort = InsertionSort;
-	std::vector<int> TestVector = GenerateVectorDescendantOrder(10);
+	std::vector<int> TestVector = GenerateVectorAscendentOrder(11);
+
+	HeapSort(TestVector);
 
 	uint32_t TestingAmount = 300;
-	
+
 	/*BeachMarking(ptr_BubbleSort, TestingAmount);
 
 	BeachMarking(ptr_InsertionSort, TestingAmount);*/
