@@ -1,6 +1,15 @@
 #pragma once
 #include <vector>
 #include <ctime>
+
+/*! to swap 2 elements*/
+void Swap(int &LeftSideValue, int &RightSideValue)
+{
+	int Temp = LeftSideValue;
+	LeftSideValue = RightSideValue;
+	RightSideValue = Temp;
+}
+
 /*! output of the vector is 1,2,3,4,5,6,7,8,9 etc...*/
 std::vector<int> GenerateVectorAscendentOrder(int Size)
 {

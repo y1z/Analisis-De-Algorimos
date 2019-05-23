@@ -1,139 +1,11 @@
 #include <vector>
 #include <random>
-#include <chrono>
+#include <numeric>
+#include <algorithm>//<-- para el std::is_sorted()
 #include <fstream>
 #include "..//..//Timer/Timer.h"
 #include "UtilityFunctions.h"
-void BuildMaxHeap(std::vector<int> &Vec, int CurrentPlace, int Limit);
-
-/*! to swap 2 elements*/
-void Swap(int &LeftSideValue, int &RightSideValue)
-{
-	int Temp = LeftSideValue;
-	LeftSideValue = RightSideValue;
-	RightSideValue = Temp;
-}
-
-/*! this is an my version of bubbleSort*/
-void BubbleSort(std::vector<int> &Vec)
-{
-	// to not have to sort an necessarily
-	bool isSorted = true;
-
-	for (auto Elemento : Vec)
-	{
-		for (int j = 0; j < Vec.size() - 1; ++j)
-		{
-			if (Vec[j] > Vec[j + 1])
-			{
-				Swap(Vec[j], Vec[j + 1]);
-				isSorted = false;
-			}
-		}
-
-		if (isSorted) { break; }
-
-		isSorted = true;
-	}
-}
-
-/*! this is an implementation of Insertion-sort*/
-void InsertionSort(std::vector<int> &Vec)
-{
-	for (int i = Vec.size() - 1; i > 0; --i)
-	{
-		if (Vec[i] < Vec[i - 1])
-		{
-			// this is so we don't go out of bounds 
-			int CurrentPos = i;
-			// making sure we don't go out of bonds
-			while (CurrentPos <= (Vec.size() - 1) && Vec[CurrentPos] < Vec[CurrentPos - 1])
-			{
-				Swap(Vec[CurrentPos - 1], Vec[CurrentPos]);
-				CurrentPos++;
-			}
-		}
-	}
-}
-/*!This is an implementation of HeapSort*/
-void HeapSort(std::vector<int> &Vec)
-{
-	// Building a max heap 
-	uint32_t HeapLimit = Vec.size() - 1;
-	uint32_t OrderedSection = 0;
-
-	for (int i = Vec.size() /2 ; i >= 0; --i)
-	{
-		BuildMaxHeap(Vec, i, HeapLimit);
-		//Swap(Vec[HeapLimit], Vec[OrderedSection]);
-		//printf("Order : ");
-		//PrintVector(Vec);
-		//OrderedSection++;
-		//HeapLimit--;
-	}
-
-}
-
-void BuildMaxHeap(std::vector<int> &Vec, int CurrentPlace, int Limit)
-{
-	/*!
- 2*i+1 //<- get the left node
- 2*i+2 //<- get the right node
- i/2-1 //<- get the parent node
- **/
- // child
-	int GetLeftChild = (2 * CurrentPlace) + 1;
-	int GetRightChild = (2 * CurrentPlace) + 2;
-	int GetParent = (CurrentPlace - 1) / 2;
-
-	uint32_t BiggestNumberPlace = CurrentPlace;
-
-	printf("entering :");
-	PrintVector(Vec);
-
-	//if (CurrentPlace > 0)
-	//{
-
-	//	if (Vec[GetParent] < Vec[CurrentPlace])
-	//	{
-	//		printf("Swaping : %d , %d \n", Vec[GetParent], Vec[CurrentPlace]);
-	//		Swap(Vec[GetParent], Vec[CurrentPlace]);
-	//		BuildMaxHeap(Vec, GetParent, Limit);
-	//	}
-
-	//}
-	//if (BiggestNumberPlace != 0 && Vec[GetParent] < Vec[BiggestNumberPlace])
-	//{
-	//	BiggestNumberPlace = GetParent;
-	//}
-
-	if (GetRightChild <= Limit && Vec[GetRightChild] > Vec[BiggestNumberPlace])
-	{
-		BiggestNumberPlace = GetRightChild;
-
-		//printf("\nSwaping : %d , %d \n", Vec[GetRightChild], Vec[CurrentPlace]);
-		//Swap(Vec[GetRightChild], Vec[CurrentPlace]);
-		//BuildMaxHeap(Vec, GetRightChild, Limit);
-	}
-
-	if (GetLeftChild <= Limit && Vec[GetLeftChild] > Vec[BiggestNumberPlace])
-	{
-		BiggestNumberPlace = GetLeftChild;
-		//printf("\nSwaping : %d , %d \n", Vec[GetLeftChild], Vec[CurrentPlace]);
-		//Swap(Vec[GetLeftChild], Vec[CurrentPlace]);
-		//BuildMaxHeap(Vec, GetLeftChild, Limit);
-	//	BuildMaxHeap(Vec, CurrentPlace, Limit);
-
-	}
-
-	if (CurrentPlace != BiggestNumberPlace)
-	{
-		Swap(Vec[CurrentPlace], Vec[BiggestNumberPlace]);
-		BuildMaxHeap(Vec, BiggestNumberPlace, Limit);
-	}
-
-}
-
+#include "Sorting_Header.h"
 /*! my own type def of a function pointer */
 using FunctionPointer = void(*)(std::vector<int>&);
 
@@ -186,15 +58,27 @@ void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue)
 	ResultFile << "\n\n";
 	ResultFile.close();
 }
-
+/// main function
 int main()
 {
 	Timer timer;
 	FunctionPointer ptr_BubbleSort = BubbleSort;
 	FunctionPointer ptr_InsertionSort = InsertionSort;
-	std::vector<int> TestVector = GenerateVectorAscendentOrder(11);
 
-	HeapSort(TestVector);
+	std::vector<int> TestVector = GenerateVectorDescendantOrder(900);
+
+	MergeSort(TestVector, 0, TestVector.size() - 1);
+
+	if (std::is_sorted(TestVector.begin(), TestVector.end()))
+	{
+		printf_s("The Vector is sorted ");
+	}
+	else
+	{
+		printf_s("The Vector is NOT sorted ");
+	}
+
+	PrintVector(TestVector);
 
 	uint32_t TestingAmount = 300;
 
