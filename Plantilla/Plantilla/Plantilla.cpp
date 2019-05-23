@@ -1,5 +1,4 @@
 #include <vector>
-#include <random>
 #include <numeric>
 #include <algorithm>//<-- para el std::is_sorted()
 #include <fstream>
@@ -10,7 +9,7 @@
 using FunctionPointer = void(*)(std::vector<int>&);
 
 /*! write to a file for later use */
-void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue)
+void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue, uint32_t Iterations = 10)
 {
 	std::ofstream ResultFile;
 	Timer timer;
@@ -18,8 +17,8 @@ void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue)
 	// for reseting the original value
 	uint32_t StratingValueCopy = StratingValue;
 
-	ResultFile << "Case Theta : ";
-	for (int i = 0; i < 10; ++i)
+	ResultFile << "Case RandomOrder : ";
+	for (int i = 0; i < Iterations; ++i)
 	{
 		std::vector<int> AvergeCaseVector = GenerateVectorRandomOrder(StratingValue);
 		timer.StartTiming();
@@ -31,9 +30,9 @@ void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue)
 	ResultFile << '\n';
 	StratingValue = StratingValueCopy;
 
-	ResultFile << "Case Omega : ";
+	ResultFile << "Case AscendentOrder : ";
 	// big Omega 
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < Iterations; ++i)
 	{
 		std::vector<int> BestCaseVector = GenerateVectorAscendentOrder(StratingValue);
 		timer.StartTiming();
@@ -45,8 +44,8 @@ void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue)
 	ResultFile << '\n';
 	StratingValue = StratingValueCopy;
 
-	ResultFile << "Case Big O : ";
-	for (int i = 0; i < 10; ++i)
+	ResultFile << "Case DescendantOrder : ";
+	for (int i = 0; i < Iterations; ++i)
 	{
 		std::vector<int> WorstCaseVector = GenerateVectorDescendantOrder(StratingValue);
 		timer.StartTiming();
@@ -62,8 +61,6 @@ void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue)
 int main()
 {
 	Timer timer;
-	FunctionPointer ptr_BubbleSort = BubbleSort;
-	FunctionPointer ptr_InsertionSort = InsertionSort;
 
 	std::vector<int> TestVector = GenerateVectorDescendantOrder(900);
 
@@ -82,13 +79,8 @@ int main()
 
 	uint32_t TestingAmount = 300;
 
-	/*BeachMarking(ptr_BubbleSort, TestingAmount);
-
-	BeachMarking(ptr_InsertionSort, TestingAmount);*/
-
 	printf("Here is the Vector before being sorted \n");
 
-	PrintVector(TestVector);
 	timer.StartTiming();
 	InsertionSort(TestVector);
 	timer.EndTiming();

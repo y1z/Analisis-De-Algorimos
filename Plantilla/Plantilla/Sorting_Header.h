@@ -1,7 +1,7 @@
 #pragma once
 #include <vector> 
 #include "UtilityFunctions.h"
-
+/// Forward declarations 
 void BuildMaxHeap(std::vector<int> &Vec, int CurrentPlace, int Limit);
 void Merge(std::vector<int> &Vec, int LowerLimit, int middle, int UpperLimit);
 void QuickSort(std::vector<int> &Vec, int LowerLimit, int UpperLimit);
@@ -134,7 +134,7 @@ void Merge(std::vector<int> &Vec, int LowerLimit, int middle, int UpperLimit)
 	}
 
 }
-
+/*! this is to help fin a pivot for quick-sort*/
 int Partition(std::vector<int> &Vec, int LowerLimit, int UpperLimit)
 {
 	int Count = LowerLimit - 1;
@@ -154,8 +154,7 @@ int Partition(std::vector<int> &Vec, int LowerLimit, int UpperLimit)
 
 	return Count + 1;
 }
-
-/*! this is going to used in the mergesort*/
+/*! this is going to used in the merge-sort*/
 void QuickSort(std::vector<int> &Vec, int LowerLimit, int UpperLimit)
 {
 	if (LowerLimit < UpperLimit)

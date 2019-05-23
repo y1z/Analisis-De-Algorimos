@@ -1,5 +1,5 @@
 # Analisis-De-Algorimos
- Aqui voy a dejar todas las tareas, Proyectos etc... 
+ Aqui voy a dejar todas las tareas, Proyectos etc...
  de la clase "Analisis De Algoritmos".  
 # Estructura 
 * Cada tarea y Proyecto va a tener su propio carpeta con 3 excepcion estas son "Archivos De Referncia", "Timer" y "Latex".
