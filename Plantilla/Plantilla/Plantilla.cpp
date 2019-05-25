@@ -66,6 +66,9 @@ int main()
 
 	MergeSort(TestVector, 0, TestVector.size() - 1);
 
+	SearchTesting(TestVector);
+
+
 	if (std::is_sorted(TestVector.begin(), TestVector.end()))
 	{
 		printf_s("The Vector is sorted ");
@@ -77,17 +80,5 @@ int main()
 
 	PrintVector(TestVector);
 
-	uint32_t TestingAmount = 300;
-
-	printf("Here is the Vector before being sorted \n");
-
-	timer.StartTiming();
-	InsertionSort(TestVector);
-	timer.EndTiming();
-
-	printf("Here is the Vector After being sorted \n");
-
-	PrintVector(TestVector);
-	timer.GetResult();
 	return 0;
 }
