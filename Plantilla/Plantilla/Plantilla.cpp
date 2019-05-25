@@ -1,10 +1,10 @@
 #include <vector>
-#include <numeric>
 #include <algorithm>//<-- para el std::is_sorted()
 #include <fstream>
 #include "..//..//Timer/Timer.h"
 #include "UtilityFunctions.h"
 #include "Sorting_Header.h"
+#include "Search_Header.h"
 /*! my own type def of a function pointer */
 using FunctionPointer = void(*)(std::vector<int>&);
 
