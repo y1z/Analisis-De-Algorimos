@@ -2,8 +2,9 @@
 #include <vector>
 #include <ctime>
 
+void Swap(int &LeftSideValue, int &RightSideValue);
 /*! to swap 2 elements*/
-void Swap(int &LeftSideValue, int &RightSideValue)
+inline void Swap(int &LeftSideValue, int &RightSideValue)
 {
 	int Temp = LeftSideValue;
 	LeftSideValue = RightSideValue;

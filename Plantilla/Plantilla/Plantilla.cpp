@@ -1,6 +1,7 @@
 #include <vector>
 #include <algorithm>//<-- para el std::is_sorted()
 #include <fstream>
+#include <map>
 #include "..//..//Timer/Timer.h"
 #include "UtilityFunctions.h"
 #include "Sorting_Header.h"
@@ -61,11 +62,20 @@ inline void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue
 int main()
 {
 	Timer timer;
-	std::vector<int> TestVector = GenerateVectorAscendentOrder(3000);
+	//std::vector<int> TestVector = GenerateVectorAscendentOrder(300);
+	//std::vector<int> TestVector = GenerateVectorDescendantOrder(300);
+	std::vector<int> TestVector = GenerateVectorRandomOrder(300);
 
 	FunctionPointer QuickSortTest = StartQuickSort;
 
-  MergeSort(TestVector, 0, TestVector.size() - 1);
+  //MergeSort(TestVector, 0, TestVector.size() - 1);
+
+	auto hashTable = GenerateHashTable(TestVector);
+
+	for (auto &Vec : hashTable)
+	{
+		PrintVector(Vec.second);
+	}
 
 	//BeachMarking(QuickSortTest, 100, 15);
 	
