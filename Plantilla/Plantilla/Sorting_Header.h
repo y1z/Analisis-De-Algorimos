@@ -134,10 +134,10 @@ void Merge(std::vector<int> &Vec, int LowerLimit, int middle, int UpperLimit)
 	}
 
 }
-/*! this is to help fin a pivot for quick-sort*/
+/*! this is to help find a pivot for quick-sort*/
 int Partition(std::vector<int> &Vec, int LowerLimit, int UpperLimit)
 {
-	int Count = LowerLimit - 1;
+	int GreaterThanPivotCount = LowerLimit - 1;
 	int PivotPos = UpperLimit;
 
 	for (int i = LowerLimit; i < UpperLimit; ++i)
@@ -145,14 +145,14 @@ int Partition(std::vector<int> &Vec, int LowerLimit, int UpperLimit)
 
 		if (Vec[PivotPos] > Vec[i])
 		{
-			++Count;
-			Swap(Vec[i], Vec[Count]);
+			++GreaterThanPivotCount;
+			Swap(Vec[i], Vec[GreaterThanPivotCount]);
 		}
 
 	}
-	Swap(Vec[UpperLimit], Vec[Count + 1]);
+	Swap(Vec[UpperLimit], Vec[GreaterThanPivotCount + 1]);
 
-	return Count + 1;
+	return GreaterThanPivotCount + 1;
 }
 /*! this is going to used in the merge-sort*/
 void QuickSort(std::vector<int> &Vec, int LowerLimit, int UpperLimit)

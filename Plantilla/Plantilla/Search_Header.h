@@ -3,7 +3,8 @@
 #include <iostream>
 
 /*! this  is a template because linear search is so simple you can
-convert this algorithms to a template without trouble*/
+convert this algorithms to a template without trouble, and it searches 
+all the element 1 by 1.*/
 template<class T>
 bool LinearSearch(std::vector<T> &Vec, T &ItemToFind);
 /*! BinarySearch Requires that the array already be sorted */
@@ -60,7 +61,7 @@ inline bool BinarySearch(std::vector<int>& Vec, int Number, std::size_t LeftHalf
 		}
 
 	}
-	else// this is for when there are only 2 left
+	else// this is for when there are only options 2 left
 	{
 		if (Vec[LeftHalf] == Number)
 		{
@@ -72,7 +73,6 @@ inline bool BinarySearch(std::vector<int>& Vec, int Number, std::size_t LeftHalf
 		}
 
 	}
-
 
 	return false;
 }
