@@ -2,10 +2,17 @@
 #include <vector> 
 #include "UtilityFunctions.h"
 /// Forward declarations 
+/*! functions that help the sorting functions */
 void BuildMaxHeap(std::vector<int> &Vec, int CurrentPlace, int Limit);
 void Merge(std::vector<int> &Vec, int LowerLimit, int middle, int UpperLimit);
 void QuickSort(std::vector<int> &Vec, int LowerLimit, int UpperLimit);
 int Partition(std::vector<int> &Vec, int LowerLimit, int UpperLimit);
+/*! Starter functions, aka functions for the benchmarking function 
+so i don't have to rewrite that function*/
+void StartHeapSort(std::vector<int> &Vec);
+void StartQuickSort(std::vector<int> &Vec);
+void StartMergeSort(std::vector<int> &Vec);
+
 
 /*! this is an my version of bubbleSort*/
 void BubbleSort(std::vector<int> &Vec)
@@ -154,6 +161,7 @@ int Partition(std::vector<int> &Vec, int LowerLimit, int UpperLimit)
 
 	return GreaterThanPivotCount + 1;
 }
+
 /*! this is going to used in the merge-sort*/
 void QuickSort(std::vector<int> &Vec, int LowerLimit, int UpperLimit)
 {
@@ -164,4 +172,20 @@ void QuickSort(std::vector<int> &Vec, int LowerLimit, int UpperLimit)
 		QuickSort(Vec, LowerLimit, Pivot - 1);
 		QuickSort(Vec, Pivot + 1, UpperLimit);
 	}
+}
+
+
+inline void StartHeapSort(std::vector<int>& Vec)
+{
+	HeapSort(Vec, 0, Vec.size() - 1);
+}
+
+inline void StartQuickSort(std::vector<int>& Vec)
+{
+	QuickSort(Vec, 0, Vec.size() - 1);
+}
+
+inline void StartMergeSort(std::vector<int>& Vec)
+{
+	MergeSort(Vec, 0, Vec.size() - 1);
 }

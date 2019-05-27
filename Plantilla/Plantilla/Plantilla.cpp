@@ -9,7 +9,7 @@
 using FunctionPointer = void(*)(std::vector<int>&);
 
 /*! write to a file for later use */
-void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue, uint32_t Iterations = 10)
+inline void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue, uint32_t Iterations = 10, uint32_t Increament = 200)
 {
 	std::ofstream ResultFile;
 	Timer timer;
@@ -25,7 +25,7 @@ void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue, uint3
 		SortingFunction(AvergeCaseVector);
 		timer.EndTiming();
 		ResultFile << timer.GetResultMicroSeconds() << '\t';
-		StratingValue += 200;
+		StratingValue += Increament;
 	}
 	ResultFile << '\n';
 	StratingValue = StratingValueCopy;
@@ -39,7 +39,7 @@ void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue, uint3
 		SortingFunction(BestCaseVector);
 		timer.EndTiming();
 		ResultFile << timer.GetResultMicroSeconds() << '\t';
-		StratingValue += 200;
+		StratingValue += Increament;
 	}
 	ResultFile << '\n';
 	StratingValue = StratingValueCopy;
@@ -52,7 +52,7 @@ void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue, uint3
 		SortingFunction(WorstCaseVector);
 		timer.EndTiming();
 		ResultFile << timer.GetResultMicroSeconds() << '\t';
-		StratingValue += 200;
+		StratingValue += Increament;
 	}
 	ResultFile << "\n\n";
 	ResultFile.close();
@@ -61,12 +61,15 @@ void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue, uint3
 int main()
 {
 	Timer timer;
+	std::vector<int> TestVector = GenerateVectorAscendentOrder(3000);
 
-	std::vector<int> TestVector = GenerateVectorDescendantOrder(900);
+	FunctionPointer QuickSortTest = StartQuickSort;
 
-	MergeSort(TestVector, 0, TestVector.size() - 1);
+  MergeSort(TestVector, 0, TestVector.size() - 1);
 
-	SearchTesting(TestVector);
+	//BeachMarking(QuickSortTest, 100, 15);
+	
+	//SearchTesting(TestVector);
 
 
 	if (std::is_sorted(TestVector.begin(), TestVector.end()))
