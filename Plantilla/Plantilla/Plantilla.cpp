@@ -6,6 +6,7 @@
 #include "UtilityFunctions.h"
 #include "Sorting_Header.h"
 #include "Search_Header.h"
+#include "My_Hash_functions.h"
 /*! my own type def of a function pointer */
 using FunctionPointer = void(*)(std::vector<int>&);
 
@@ -63,8 +64,8 @@ int main()
 {
 	Timer timer;
 	//std::vector<int> TestVector = GenerateVectorAscendentOrder(300);
-	//std::vector<int> TestVector = GenerateVectorDescendantOrder(300);
-	std::vector<int> TestVector = GenerateVectorRandomOrder(300);
+	std::vector<int> TestVector = GenerateVectorDescendantOrder(300);
+	//std::vector<int> TestVector = GenerateVectorRandomOrder(300);
 
 	FunctionPointer QuickSortTest = StartQuickSort;
 
@@ -76,11 +77,25 @@ int main()
 	{
 		PrintVector(Vec.second);
 	}
+	int searchValue = 30;
+
+	std::cout << "give me a value\n";
+	std::cin >> searchValue;
+
+	if (SearchHashTable(hashTable, searchValue))
+	{
+		printf("found the value %d",searchValue);
+	}
+	else
+	{
+		printf("Did NOT find %d", searchValue);
+	}
+
+
 
 	//BeachMarking(QuickSortTest, 100, 15);
 	
 	//SearchTesting(TestVector);
-
 
 	if (std::is_sorted(TestVector.begin(), TestVector.end()))
 	{

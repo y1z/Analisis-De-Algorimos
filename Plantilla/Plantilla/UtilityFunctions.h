@@ -1,8 +1,13 @@
 #pragma once
 #include <vector>
+
 #include <ctime>
 
+
 void Swap(int &LeftSideValue, int &RightSideValue);
+/*! this generates a has table */
+std::map<int, std::vector<int>> GenerateHashTable(std::vector<int> &Vec);
+
 /*! to swap 2 elements*/
 inline void Swap(int &LeftSideValue, int &RightSideValue)
 {

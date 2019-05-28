@@ -14,8 +14,7 @@ bool BinarySearchStart(std::vector<int> &Vec, int Number);
 bool BinarySearch(std::vector<int> &Vec, int Number, std::size_t LeftHalf, std::size_t RightHalf);
 /*! this function is used to test the other search functions */
 void SearchTesting(std::vector<int> &Vec);
-/*! this generates a has table */
-std::map<int, std::vector<int>> GenerateHashTable(std::vector<int> &Vec);
+
 
 template<class T>
 inline bool LinearSearch(std::vector<T> &Vec, T &ItemToFind)
@@ -123,27 +122,5 @@ void SearchTesting(std::vector<int> &Vec)
 
 }
 
-inline std::map<int, std::vector<int>> GenerateHashTable(std::vector<int>& Vec)
-{
-	int constexpr Delimiter = 37;
-	// This is temporary 
-	std::map<int, std::vector<int>> HashTable;
-	for (int Value : Vec)
-	{
-		int Key = Value % Delimiter;
-		auto isInserted = HashTable.find(Key);
-		if (isInserted == HashTable.end())
-		{
-			std::vector<int> Buckit;
-			HashTable.insert(std::make_pair(Key, Buckit));
-		}
-		else
-		{
-			isInserted->second.emplace_back(Value);
-		}
 
-	}
-	return HashTable;
-
-}
 
