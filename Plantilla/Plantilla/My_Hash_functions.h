@@ -44,7 +44,5 @@ inline bool SearchHashTable(std::map<int, std::vector<int>>& HashTable, int Sear
 	{
 		return LinearSearch(PossibleMapLocaction->second, SearchValue);
 	}
-
-
 	return false;
 }
