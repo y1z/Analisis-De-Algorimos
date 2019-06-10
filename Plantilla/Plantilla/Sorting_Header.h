@@ -52,6 +52,24 @@ void InsertionSort(std::vector<int> &Vec)
 		}
 	}
 }
+/*! this is for bucket sort */
+void InsertionSort(std::vector<float> &Vec)
+{
+	for (int i = Vec.size() - 1; i > 0; --i)
+	{
+		if (Vec[i] < Vec[i - 1])
+		{
+			// this is so we don't go out of bounds 
+			int CurrentPos = i;
+			// making sure we don't go out of bonds
+			while (CurrentPos <= (Vec.size() - 1) && Vec[CurrentPos] < Vec[CurrentPos - 1])
+			{
+				Swap(Vec[CurrentPos - 1], Vec[CurrentPos]);
+				CurrentPos++;
+			}
+		}
+	}
+}
 /*!This is an implementation of HeapSort*/
 void HeapSort(std::vector<int> &Vec, int LowerLimit, int UpperLimit)
 {

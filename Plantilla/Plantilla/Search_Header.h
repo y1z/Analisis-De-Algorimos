@@ -15,7 +15,6 @@ bool BinarySearch(std::vector<int> &Vec, int Number, std::size_t LeftHalf, std::
 /*! this function is used to test the other search functions */
 void SearchTesting(std::vector<int> &Vec);
 
-
 template<class T>
 inline bool LinearSearch(std::vector<T> &Vec, T &ItemToFind)
 {

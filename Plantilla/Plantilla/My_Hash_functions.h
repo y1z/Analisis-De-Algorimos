@@ -31,8 +31,6 @@ inline std::map<int, std::vector<int>> GenerateHashTable(std::vector<int>& Vec)
 	return HashTable;
 }
 
-
-
 inline bool SearchHashTable(std::map<int, std::vector<int>>& HashTable, int SearchValue)
 {
 	int KeyLocation = SearchValue % HashDelimiter;
