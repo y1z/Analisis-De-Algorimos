@@ -1,0 +1,419 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}% To load images 
+\usepackage{tabularx}
+\usepackage{algpseudocode}% for Writing pseudocode code 
+\usepackage{algorithm}% algorithms 
+\usepackage{algorithmicx}
+% this package is for entering code in latex 
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{soul}
+
+\definecolor{JustGreen}{rgb}{0,0.6,0}
+
+% need to define this 2 first before calling maketitle in the document 
+\author{Yhaliff Said Barraza}
+\title{Sorting Magic}
+
+
+%settings for presenting code 
+\lstset{ 
+  language=C++,
+  keywordstyle=\color{blue}, %color of the keywords 
+  tabsize=2,
+  commentstyle=\color{JustGreen},
+     frame=L,
+}
+\begin{document}
+\maketitle
+\section{Sorting}
+Have you ever needed to order/sort something \textit{your life, time, fiends, numbers? } well that boring as fuck, fortunately for you computers can do that for you with the magic of \textbf{sorting algorithms!!!!} \\
+\subsection{Bubble sort} 
+\subsubsection{Problem definition}
+\label{subsub:ProbDef}
+\textit{You what to sort stuff } Numbers in this case
+\subsubsection{Input and output}
+\label{subsub:In&Out}
+Example :arr = $1|5|2|3|8|4$ this is your \textbf{Input} after will sort it, you will receive\\
+\textbf{This} arr = $1|2|3|4|5|8$ which is your \textbf{Output}\\
+
+
+Now let's start simple width the most basic form a sorting know to \textbf{MAN KINDDD } \textsc{bubble sort}\\
+The way bubble sort work is the following manner \\
+\subsubsection{Explanation}
+
+\begin{enumerate}
+\item Start at the beginning of the array \\
+\item check if the values at the current index is bigger that the one at the next index \\
+\item if true than Swap the values \\
+\item move to the next index \\
+\item repeat until the current index is the last index \\
+\item keep repeating all previous steps, until the number of representations is equal to the amount of element in the array OR the array is sorted.\\\\
+\end{enumerate}
+
+If that hard to understand then lets look at some pseudo code 
+
+\subsubsection{pseudo code}
+\textbf{Note: "N" mean input which is an array in this case and x means index }\\
+\begin{algorithm}
+\caption{Bubble sort}
+\begin{algorithmic}[1] % needs to have a statement inside or it give an Error
+\For{each number in N}
+\For{each number in N}
+\If {$N[x] > N[x + 1]$  }
+\State Swap(N[x],N[x + 1])
+\EndIf
+\EndFor
+\State comment if no Swap occurred then we finish sorting
+\EndFor
+\State $Return\,N$// Sorted
+\end{algorithmic}
+\end{algorithm}
+\paragraph{simple words}
+To put in simple words what bubble sort does, it move the largest elements (numbers) to the end of the array, in the process moving the smaller element to the beginning of the same array \textbf{Now Time to put this in code } Then do a benchmark 
+
+\subsubsection{Code}
+
+\textbf{Here is the C++ implementation}
+% Bubble sort code 
+\begin{lstlisting} 
+void BubbleSort(std::vector<int> &Vec) 
+{
+	// to not have to sort an necessarily
+	bool isSorted = true;
+
+		for (auto Elemento : Vec) 
+		{
+			for (int j = 0; j < Vec.size() - 1; ++j)
+			{
+				if (Vec[j] > Vec[j + 1]) {
+					Swap(Vec[j], Vec[j + 1]);
+					isSorted = false;
+				}
+			}
+			
+			if (isSorted) { break; }
+
+			isSorted = true;
+		}
+}
+
+\end{lstlisting}
+\subsubsection{Benchmark} \label{subsub:Benc}
+\textbf{TIME FOR BENCHMAKING }
+\\
+Here is the resulting of bench-marking Bubble sort, should also mention that the y-axis represents \textit{Microseconds} and the x-axis represent the amount of elements in the array
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Bubble Sort.png} 
+\end{center}
+
+\subsection{Insertion sort}
+Now it's time to talk about another algorithm, one that likes going \textbf{DEEP}\\
+the man that go his own way (backwards) muh boi \textbf{INSERTION SORT!!!!}
+\subsubsection{Problem definition}
+It's still the same problem that i mention in \ref{subsub:ProbDef}
+\subsubsection{Input and output}
+the same that i said in \ref{subsub:In&Out} sill applies here 
+\subsubsection{Explanation}
+The way that Insertion sort work is very particular because it start's at (almost) the end of an array , and works it's way to the end it would be best explained with a step by step guide of insertion sort \\
+\textbf{something}
+\begin{enumerate}
+\item \label{item:start} Start at the pen-ultimate index of the array(will call this N[1] )
+\item \label{item:Check} Check if the item in the current index is bigger than it's neighbor if true then do step \ref{item:move} else go to step \ref{item:last}
+\item \label{item:move} swap the values and move forward then repeat step \ref{item:Check} until your reach the last index in the array 
+\item  \label{item:last}Now start the entire process at N[1] - (the amount of times you reached this step) and repeat step \ref{item:Check} and \ref{item:move} until you've go through the all the array 
+\end{enumerate}
+\paragraph{note} now after explain the process of insertion sort, we can use this knowledge convert the previous steps into code.\\
+\subsubsection{Code} 
+\begin{lstlisting} 
+void InsertionSort(std::vector<int> &Vec)
+{
+	for (int i = Vec.size() - 1; i > 0; --i) {
+
+		if (Vec[i] < Vec[i - 1])
+		{
+			// this is so we don't go out of bounds 
+			int CurrentPos = i;
+			// making sure we don't go out of bonds
+			while (CurrentPos <= (Vec.size() - 1) && Vec[CurrentPos] < Vec[CurrentPos - 1])
+			{
+				Swap(Vec[CurrentPos - 1], Vec[CurrentPos]);
+				CurrentPos++;
+			}
+		}
+	}
+}
+\end{lstlisting}
+\paragraph{and teh amunt of fast} now it's time to answer another question you probably have in your head , ? how fast is this thing ? will the simple answer is \textbf{BENCH MARKING} and it depends\\
+\subsubsection{BENCH MARKING}
+Here's the result's of bench making and what i said in \ref{subsub:Benc} is still true here.
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Insertion Sort.png}
+\end{center}
+\subsection{Quick-Sort}
+Now you are probably thinking to yourself right now \textit{I what some goddamn SPEED } to that i say it's time to introduce my man of fast, the recursive devil, His name is literally Synonyms for rapid , swift, instantaneous and \textbf{SPEED} , \textbf{QUICK-SORT!!!!!} \st{under the right circumstances but that's for later}\\
+\subsubsection{Problem definition}
+ again what i said at \autoref{subsub:ProbDef} still applies here .
+ \subsubsection{Input and output}
+nothing has changed so far so what I said in \autoref{subsub:In&Out} is still true.
+\subsubsection{Explanation}
+Now your probably thinking \textit{ HOW THE FUCK DOES IT GO FAST ??? } which i will enplane in a series of steps.
+
+ 
+\textbf{NOTE :} When i say \textit{left} I'm referring to element closer to the beginning of the array, when i say \textit{right} I'm referring to element's closer to the end of the array.
+
+
+\textbf{NOTE 2 :} The variable used to keep track of the amount of elements will be called \textit{"Count"}
+
+\textbf{NOTE 3 :} you need to keep track of the \textit{end} and  \textit{beginning} of the array
+\begin{enumerate}
+\item First chose a pivot (it can be in the center,beginning or end of the array ) I'm choosing the end in this case.\label{item:Q_Pivot}
+\item then move all element that are smaller than the pivot to the left (you \textbf{Need} to keep track of how many elements are bigger than the pivot. \label{item:Q_Order}
+\item then when you reach the end of the array use the variable Count to place the value you chose as pivot to it's appropriate location .
+\item Now return the variable Count + 1.
+\item Now divide the array in 2 half's using the pivot to determine the center.(unless the left side is greater then the right side)\label{item:Q_Recursion}
+\item Now repeat Step \ref{item:Q_Pivot} until you can no longer do Step \ref{item:Q_Recursion} after that you done. 
+
+\end{enumerate}
+\paragraph{Partition}\label{para:Partition} if your wondering how to do this in just 1 function well you don't(unless you want to), quick-sort (at lest the recursive version) requires a second function to find the partition.(i will show the function in different blocks)
+\subsection{code}
+Now Here is the code for \textbf{Partition}
+\begin{lstlisting} 
+/*! this is to help find a pivot for quick-sort*/
+int Partition(std::vector<int> &Vec, int LowerLimit, int UpperLimit)
+{
+	int GreaterThanPivotCount = LowerLimit - 1;
+	int PivotPos = UpperLimit;
+
+	for (int i = LowerLimit; i < UpperLimit; ++i)
+	{
+
+		if (Vec[PivotPos] > Vec[i])
+		{
+			++GreaterThanPivotCount;
+			Swap(Vec[i], Vec[GreaterThanPivotCount]);
+		}
+
+	}
+	Swap(Vec[UpperLimit], Vec[GreaterThanPivotCount + 1]);
+
+	return GreaterThanPivotCount + 1;
+}
+\end{lstlisting}
+Here is the code for \textbf{Quick sort }
+
+
+\begin{lstlisting} 
+/*! this is going to used in the merge-sort*/
+void QuickSort(std::vector<int> &Vec, int LowerLimit, int UpperLimit)
+{
+	if (LowerLimit < UpperLimit)
+	{
+		int Pivot = Partition(Vec, LowerLimit, UpperLimit);
+		//PrintVector(Vec);
+		QuickSort(Vec, LowerLimit, Pivot - 1);
+		QuickSort(Vec, Pivot + 1, UpperLimit);
+	}
+}
+\end{lstlisting}
+\paragraph{How fast } Time to find out how fast is quick sort how you know how \textbf{BENCH MAKING}
+\subsubsection{BENCH MAKING quick-sort}
+Here's the result's of bench making and what i said in \ref{subsub:Benc} is still true here.
+\begin{center}
+\includegraphics[width=\textwidth]{Quick_Sort}
+\end{center}
+As you can see quick-sort is very fast in the case where the array is completely random in the other cases however it's not as efficient, Plus this wlll be the last bench mark becase i using another method(and frankliy i don't have the time to bench mark everything writing this already take a lot of time) 
+\subsubsection{Master Method}
+Here is a way to calculate the efficiency of a recursive algorithms . it looks like this 
+\begin{equation}
+T(x)=aT(\frac{n}{b}) + N
+\end{equation}
+The 'a' represents the amount of time the function call itself,  $\frac{n}{b}$ represents how many time the input is divided and the N is something else the function has to do
+
+now lets apply this to Quick sort 
+\begin{align}
+\begin{split}
+a= 2 
+\\
+b = 2
+\\
+T(Quick Sort) = 2T(\frac{n}{2}) + partition
+\end{split}
+\end{align}
+A is 2 because the function only calls itself 2 time (per recursion) , B is 2 because when the function calls itself it also divides the array in 2 half, partition is something the function has to do for it to work so it takes the place of N 
+\subsection{Merge Sort}
+Now lets talk about a sorting algorithms that separates and then creates Unity \textbf{Merge Sort}
+
+\paragraph{For future reference}\label{par:future Ref} by the way what i said in  \autoref{subsub:ProbDef}
+ and \autoref{subsub:In&Out} still applies here so don't ask why those other sections \textbf{Problem definition} and \textbf{Input and Output} are not here 
+\subsubsection{Explanation}
+I'll explain what merge sort does with steps \\
+\textbf{NOTE} : Pivot means the middle , 'R' means the right side of a array and 'L' means the left side of a array 
+\begin{enumerate}
+\item First get the Pivot of the array 
+\item check that L does is \textit{Not} bigger than R 
+\item divide the array in 2 half, one half that starts at L up to Pivot and the other half starts at Pivot + 1 up to R . 
+\item keep doing this until you get arrays of size 1.
+\item then merge 2 array (ordering them in the process) \label{item:M_merge}
+\item you will get bigger arrays now just repeat step \ref{item:M_merge} until you've done that for the whole array .
+\end{enumerate}
+\paragraph{Merge} just like Quick-sort in \autoref{para:Partition} within the paragraph \nameref{para:Partition}, you need a second function that is crucial to the entire process which in this case that function is merge.
+
+
+\textbf{NOTE} : this is not the normal implementation of merge what your suppose to do is copy the array(from merge-Sort) into 2 temporary arrays then copy those back to the original array(from merge-Sort) in such a way that the resulting array becomes sorted.
+\subsubsection{Code }
+Here is my implementation of Merge sort.
+ \begin{lstlisting} 
+ void Merge(std::vector<int> &Vec, int LowerLimit, int middle, int UpperLimit)
+{
+	// for when the array is bigger than 1
+	int LowerArea = middle - LowerLimit;
+	int UpperArea = UpperLimit - middle;
+
+	if (LowerArea > 1 || UpperArea > 1)
+	{
+		QuickSort(Vec, LowerLimit, UpperLimit);
+	}
+	// for the case that there are only 2 elements to be sorted 
+	else if (Vec[LowerLimit] > Vec[UpperLimit])
+	{
+		Swap(Vec[LowerLimit], Vec[UpperLimit]);
+	}
+
+}
+\end{lstlisting} 
+ This is merge sort section
+\begin{lstlisting} 
+void MergeSort(std::vector<int> &Vec, int LowerLimit, int UpperLimit)
+{
+	int Pivot = (UpperLimit + LowerLimit) / 2;
+
+	if (LowerLimit < UpperLimit)
+	{
+		MergeSort(Vec, LowerLimit, Pivot);
+
+		MergeSort(Vec, Pivot + 1, UpperLimit);
+
+		Merge(Vec, LowerLimit, Pivot, UpperLimit);
+	}
+}
+\end{lstlisting} 
+% HERE STARTS SEARCHING --------------------------------------------------------------------------------------------
+\subsection{Bucket Sort}
+   
+\subsection{Radix Sort} 
+\subsection{Counting Sort}
+
+ \section{Searching}
+Now lets say you what something from your sorted array but are 2 lazy to look for it yourself \textbf{Searching algorithms to the rescue} 
+\subsection{Problem Definition}\label{subsec:Problem Searching}
+You what to look for things (\textit{numbers , people , hentai folder} you name it) and sometimes what your looking for can be in a array, data structure etc... 
+\subsection{Input and Output} \label{subsec:Input&Output Searching}
+there are 3 option for the Output 
+\begin{enumerate}
+\item what your looking for .
+\item a true or false massage .
+\item Jack shit(aka nothing).
+\end{enumerate}
+the input can be an array, data structure etc...
+\subsection{Linear search}
+this is the most basic algorithms of all it's literately just a for loop here just look 
+\subsection{Explanation}
+it's literally just a for loop that look at each element one by one until it reaches the end and fond \textit{nothing} or it does find the element you where looking for .
+\subsection{code}
+\begin{lstlisting} 
+template<class T>
+inline bool LinearSearch(std::vector<T> &Vec, T &ItemToFind)
+{
+	for (auto PossibleMatch : Vec)
+	{
+		if (PossibleMatch == ItemToFind)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+\end{lstlisting} 
+and the complexity of this algorithm is $N$ because it has to go through every part of the array to make sure that what your looking for is in the array or not.
+\subsection{Binary search}
+Now lets say you what something more efficient that linear search, well then let me show you \textbf{Binary search}
+
+and I should mention that what i said in \autoref{subsec:Input&Output Searching} and \autoref{subsec:Problem Searching} still applies here.
+\subsection{Explanation}
+this one is harder to understand than linear-search but I will do what I've bin doing for all of this document give a bunch  of steps.
+
+\textbf{NOTE :} The Value your looking for in the array is called "S" , the left half will be called "l" and the right half will be called "R" 
+\begin{enumerate}
+\item look at the element that between l and R (in the center of the array) \label{item:StartBinary}
+\item if that element is S,then your done else continue.
+\item check if the element is bigger or smaller that S then do 1 of 2 thing 
+\begin{enumerate}
+\item the element is bigger than S so now l is equal to half of the array 
+\item the element is smaller than S so now R is equal to half of the array 
+\end{enumerate}
+\item Repeat step \ref{item:StartBinary}
+\end{enumerate}
+\textbf{NOTE :} This algorithm requires that the array already be sorted.
+\paragraph{In Simple Words} What this algorithm does is divide the section of the array it will look in until it can't or it's found the S 
+\subsubsection{Code}
+\begin{lstlisting}  
+inline bool BinarySearch(std::vector<int>& Vec, int Number, std::size_t LeftHalf, std::size_t RightHalf)
+{
+	std::size_t SearchPoint = (LeftHalf + RightHalf) / 2;
+
+	if (Number == Vec[SearchPoint])
+	{
+		return true;
+	}
+
+	/*This is so we don't have stack-overflow*/
+	if (LeftHalf < RightHalf - 1)
+	{/*Move to the right */
+
+		if (Number > Vec[SearchPoint])
+		{
+			LeftHalf = (RightHalf + LeftHalf) / 2;
+			return	BinarySearch(Vec, Number, LeftHalf, RightHalf);
+		}
+		else/*Move to the left*/
+		{
+			RightHalf = (RightHalf + LeftHalf) / 2;
+			return	BinarySearch(Vec, Number, LeftHalf, RightHalf);
+		}
+
+	}
+	else// this is for when there are only options 2 left
+	{
+		if (Vec[LeftHalf] == Number)
+		{
+			return true;
+		}
+		else if (Vec[RightHalf] == Number)
+		{
+			return true;
+		}
+
+	}
+
+	return false;
+}
+
+\end{lstlisting} 
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
