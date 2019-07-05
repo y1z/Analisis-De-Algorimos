@@ -304,7 +304,7 @@ void MergeSort(std::vector<int> &Vec, int LowerLimit, int UpperLimit)
 \end{lstlisting} 
 % HERE STARTS SEARCHING --------------------------------------------------------------------------------------------
 \subsection{Bucket Sort}
-   
+
 \subsection{Radix Sort} 
 \subsection{Counting Sort}
 
@@ -405,6 +405,70 @@ inline bool BinarySearch(std::vector<int>& Vec, int Number, std::size_t LeftHalf
 }
 
 \end{lstlisting} 
+
+\section{hashing}
+
+\paragraph{¿Que es?} separar elemento en diferentes agrupaciones dependiendo de algun criterio que nosotros decidimos 
+
+Aqui esta 2 ejemplos de hashing 
+\textbf{Metodo multiplicativo}
+\begin{lstlisting}  
+std::map<int, std::vector<int>> Hash::MultipilcativeHash(std::vector<int>& Vec)
+{
+
+	std::map<int, std::vector<int>> Result;
+
+	for (int Value : Vec)
+	{
+		float NumAndFraction = 0.6180339887 * Value;
+		// para separar tomar tomar el componente fracionario 
+		int Num = NumAndFraction;
+		float JustFraction = NumAndFraction - Num;
+
+		int key = JustFraction * 256;
+
+		auto isInserted = Result.find(key);
+		if (isInserted == Result.end())
+		{
+			std::vector<int> Buckit;
+			Result.insert(std::make_pair(key, Buckit));
+		}
+		else
+		{
+			isInserted->second.emplace_back(Value);
+		}
+	}
+	return Result;
+}
+
+\end{lstlisting} 
+multiplicamos y luego separamos el component fracionario del elemento para decidir donde poner los elementos 
+
+
+\textbf{metodo divisivo }
+\begin{lstlisting}  
+std::map<int, std::vector<int>> Hash::DivisionHash(std::vector<int>& Vec)
+{
+	std::map<int, std::vector<int>> Result;
+
+	for (int Value : Vec)
+	{
+		int Key = Value % m_HashDelimiter;
+		auto isInserted = Result.find(Key);
+		if (isInserted == Result.end())
+		{
+			std::vector<int> Buckit;
+			Result.insert(std::make_pair(Key, Buckit));
+		}
+		else
+		{
+			isInserted->second.emplace_back(Value);
+		}
+	}
+	return Result;
+}
+\end{lstlisting} 
+Usamos el modolos de algun valor para decidir donde insertar el elemento del dentro del hash . 
 \end{document}
 
 
