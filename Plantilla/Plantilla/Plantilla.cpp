@@ -7,6 +7,8 @@
 #include "Sorting_Header.h"
 #include "Search_Header.h"
 #include "My_Hash_functions.h"
+#include "Node.h"
+#include "BinaryTree.h"
 /*! my own type def of a function pointer */
 using FunctionPointer = void(*)(std::vector<int>&);
 
@@ -63,50 +65,79 @@ inline void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue
 int main()
 {
 	Timer timer;
-	//std::vector<int> TestVector = GenerateVectorAscendentOrder(300);
-	std::vector<int> TestVector = GenerateVectorDescendantOrder(300);
+	DS::BinaryTree tree;
+
+	int MiddleValue = 150;
+	int *temp = &MiddleValue;
+
+	tree.SetRootNodeValue(temp);
+
+	std::vector<int> TestVector = GenerateVectorAscendentOrder(300);
+//	std::vector<int> TestVector = GenerateVectorDescendantOrder(300);
 	//std::vector<int> TestVector = GenerateVectorRandomOrder(300);
 
-	FunctionPointer QuickSortTest = StartQuickSort;
-
-  //MergeSort(TestVector, 0, TestVector.size() - 1);
-
-	auto hashTable = GenerateHashTable(TestVector);
-
-	for (auto &Vec : hashTable)
+	for (int i = 0; i < TestVector.size() - 1; ++i)
 	{
-		PrintVector(Vec.second);
-	}
-	int searchValue = 30;
-
-	std::cout << "give me a value\n";
-	std::cin >> searchValue;
-
-	if (SearchHashTable(hashTable, searchValue))
-	{
-		printf("found the value %d",searchValue);
-	}
-	else
-	{
-		printf("Did NOT find %d", searchValue);
+		tree.AddNode(&TestVector[i]);
 	}
 
+	tree.PrintTree();
+
+	tree.RemoveNode(3);
 
 
-	//BeachMarking(QuickSortTest, 100, 15);
-	
-	//SearchTesting(TestVector);
+	tree.RemoveNode(75);
 
-	if (std::is_sorted(TestVector.begin(), TestVector.end()))
-	{
-		printf_s("The Vector is sorted ");
-	}
-	else
-	{
-		printf_s("The Vector is NOT sorted ");
-	}
+	tree.RemoveNode(9);
 
-	PrintVector(TestVector);
+	Node * FoundNode =	  tree.SearchNode(90);
+	std::cout << "\n\n the value of the node : " << FoundNode->GetValue()<< "\n\n The resulting tree \n";
+	tree.PrintTree();
+
+
+
+
+
+
+
+	//FunctionPointer QuickSortTest = StartQuickSort;
+
+ // //MergeSort(TestVector, 0, TestVector.size() - 1);
+
+	//auto hashTable = GenerateHashTable(TestVector);
+
+	//for (auto &Vec : hashTable)
+	//{
+	//	PrintVector(Vec.second);
+	//}
+	//int searchValue = 30;
+
+	//std::cout << "give me a value\n";
+	//std::cin >> searchValue;
+
+	//if (SearchHashTable(hashTable, searchValue))
+	//{
+	//	printf("found the value %d",searchValue);
+	//}
+	//else
+	//{
+	//	printf("Did NOT find %d", searchValue);
+	//}
+
+	////BeachMarking(QuickSortTest, 100, 15);
+	//
+	////SearchTesting(TestVector);
+
+	//if (std::is_sorted(TestVector.begin(), TestVector.end()))
+	//{
+	//	printf_s("The Vector is sorted ");
+	//}
+	//else
+	//{
+	//	printf_s("The Vector is NOT sorted ");
+	//}
+
+	//PrintVector(TestVector);
 
 	return 0;
 }

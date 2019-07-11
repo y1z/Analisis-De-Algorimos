@@ -1,27 +1,46 @@
 #pragma once
-#ifndef CLASS_NODE_H
-#define CLASS_NODE_H
-template<class T> class Node
+
+
+class Node
 {
 public:
 	Node()
-		:m_Height(0),m_Key(0), m_Value(nullptr), mptr_Left(nullptr), mptr_Right(nullptr)
+		:m_Depth(0), m_Key(0), m_Value(nullptr), mptr_Left(nullptr), mptr_Right(nullptr)
 	{};
-	~Node()
+
+	Node(int *Value, int height)
+		:Node()
 	{
+		m_Depth = height;
+		m_Value = Value;
+	}
+	~Node()
+	{};
+	//! to be control when i destroy the tree 
+	void TerminateAllNodes();
 
+	void SetValue(int *Value);
 
-	};
+	void SetLeftNode(int * Value);
+	void SetRightNode(int * Value);
+	// overloads 
+	void SetLeftNode(Node *node);
+	void SetRightNode(Node *node);
 
-	int m_Height;
+	void PrintValue();
+	// itself and children
+	void PrintAll();
+
+	Node *GetRightNode();
+	Node *GetLeftNode();
+	int GetValue() const;
+
+	int m_Depth;
 	int m_Key;
-	T *m_Value;
-	Node<T> *mptr_Left;
-	Node<T> *mptr_Right;
+	int *m_Value;
+	Node *mptr_Left;
+	Node *mptr_Right;
+	//! the parent node 
+	Node *mptr_Prev;
 };
 
-template<class T>
-inline Node<T>::Node()
-{}
-
-#endif // CLASS_NODE_H
