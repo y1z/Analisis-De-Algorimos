@@ -51,12 +51,14 @@ void Node::SetRightNode(int * Value)
 void Node::SetLeftNode(Node * node)
 {
 	mptr_Left = node;
+	mptr_Left->m_Depth = this->m_Depth + 1;
 	mptr_Left->mptr_Prev = this;
 }
 
 void Node::SetRightNode(Node * node)
 {
 	mptr_Right = node;
+	mptr_Right->m_Depth = this->m_Depth + 1;
 	mptr_Right->mptr_Prev = this;
 }
 
