@@ -2,11 +2,14 @@
 #include <algorithm>//<-- para el std::is_sorted()
 #include <fstream>
 #include <map>
+//-----------------------
 #include "..//..//Timer/Timer.h"
 #include "UtilityFunctions.h"
-#include "Sorting_Header.h"
+//#include "Sorting_Header.h"
 #include "Search_Header.h"
-#include "My_Hash_functions.h"
+#include "Sorting_Header.h"
+#include "SortingClass.h"
+
 /*! my own type def of a function pointer */
 using FunctionPointer = void(*)(std::vector<int>&);
 
@@ -59,54 +62,69 @@ inline void BeachMarking(FunctionPointer SortingFunction, uint32_t StratingValue
 	ResultFile << "\n\n";
 	ResultFile.close();
 }
+
+void Stop()
+{
+	std::cout << "\nPress Enter twice";
+	std::cin.ignore();
+	std::cin.get();
+}
+
 /// main function
 int main()
 {
 	Timer timer;
-	//std::vector<int> TestVector = GenerateVectorAscendentOrder(300);
-	std::vector<int> TestVector = GenerateVectorDescendantOrder(300);
-	//std::vector<int> TestVector = GenerateVectorRandomOrder(300);
 
-	FunctionPointer QuickSortTest = StartQuickSort;
+	CSorter Sorter;
 
-  //MergeSort(TestVector, 0, TestVector.size() - 1);
+	constexpr int16_t TestAmount = 300;
 
-	auto hashTable = GenerateHashTable(TestVector);
+	std::vector<int> Ascendant = GenerateVectorAscendentOrder(TestAmount);
+	std::vector<int> Descendant = GenerateVectorDescendantOrder(TestAmount);
+	std::vector<int> Random = GenerateVectorRandomOrder(TestAmount);
 
-	for (auto &Vec : hashTable)
-	{
-		PrintVector(Vec.second);
-	}
-	int searchValue = 30;
+	std::vector<float> RandomFloats = GenerateVectorRandomOrderF(300, 300);
 
-	std::cout << "give me a value\n";
-	std::cin >> searchValue;
-
-	if (SearchHashTable(hashTable, searchValue))
-	{
-		printf("found the value %d",searchValue);
-	}
-	else
-	{
-		printf("Did NOT find %d", searchValue);
-	}
-
-
-
-	//BeachMarking(QuickSortTest, 100, 15);
 	
-	//SearchTesting(TestVector);
+//	Sorter.InsertionSort(Ascendant);
+//	Sorter.InsertionSort(Descendant);
+//	Sorter.InsertionSort(Random);
 
-	if (std::is_sorted(TestVector.begin(), TestVector.end()))
+	//Sorter.HeapSort(Ascendant, 0, Ascendant.size() - 1);
+	//Sorter.HeapSort(Descendant,0, Descendant.size() - 1);
+	//Sorter.HeapSort(Random,0, Random.size() - 1);
+
+
+	Sorter.BucketSort(RandomFloats);
+
+	if (std::is_sorted(Ascendant.begin(), Ascendant.end()))
 	{
-		printf_s("The Vector is sorted ");
-	}
-	else
-	{
-		printf_s("The Vector is NOT sorted ");
+		printf("Ascendant Array is sorted \n\n");
 	}
 
-	PrintVector(TestVector);
+	if (std::is_sorted(Descendant.begin(), Descendant.end()))
+	{
+		printf("Descendant Array is sorted \n\n");
+	}
+
+	if (std::is_sorted(Random.begin(), Random.end()))
+	{
+		printf("Random Array is sorted \n\n");
+	}
+
+	if(std::is_sorted(RandomFloats.begin(),RandomFloats.end()))
+	{
+		printf("Random float Array is sorted \n\n");
+	}
+	std::cout << "after Sorting : ";
+
+	for (auto Element : RandomFloats)
+	{
+		std::cout << "[" << Element << "]";
+	}
+	std::cout << "\n---------------\n" << std::endl;
+
+	Stop();
 
 	return 0;
 }
