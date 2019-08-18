@@ -18,7 +18,7 @@ def obtenerSubsecuencias(secuencia,numero) :
         subsecuencias.append(subsecuencia)
     #Devuelve todas las subsecuencias posibles
     return subsecuencias
-
+	
 def compararSubsecuencias(subsecuencias1,subsecuencias2) :
     lcs = []
     for i in range(0,len(subsecuencias1)):
@@ -29,6 +29,7 @@ def compararSubsecuencias(subsecuencias1,subsecuencias2) :
     return lcs
 
 #Main
+print("Starting")
 secuencia1 = "TTCGCATCGGGTTG" #Primera secuencia
 secuencia2 = "TGACCGTGTGTCACG" #Segunda secuencia
 subsecuencias1 = obtenerSubsecuencias(secuencia1,1) #Obtiene todas las subsecuencias de la secuencia 1
@@ -38,3 +39,5 @@ lcs = compararSubsecuencias(subsecuencias1, subsecuencias2) #Comparara una por u
 print("---BRUTE FORCE---")
 print ("La subsecuencia mas larga comun de " + secuencia1 + " y de " + secuencia2 + " es " + "".join(lcs))
 print("\nTerminado en " + str(time.time() - start) + " segundos!\n\n")
+
+raw_input()

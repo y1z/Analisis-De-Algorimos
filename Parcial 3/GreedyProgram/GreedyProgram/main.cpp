@@ -7,8 +7,8 @@ enum Coin
 	Penny5 = 5,
 	Penny10 = 10
 };
-//! increament the pennys and makes the code cleaner 
-auto IncreamentPennys =  [&](unsigned int &CoinCount,unsigned int &Value, Coin CoinAmount)
+//! increment the penny's and makes the code cleaner 
+auto IncrementPennys =  [&](unsigned int &CoinCount,unsigned int &Value, Coin CoinAmount)
 {
 	Value += CoinAmount;
 	CoinCount++;
@@ -16,30 +16,30 @@ auto IncreamentPennys =  [&](unsigned int &CoinCount,unsigned int &Value, Coin C
 	std::cout << CoinCount << " Count of Coins" << '\n';
 };
 
-// ! add coins in the most efficient form possible 
+//! add coins in the most efficient form possible 
 unsigned int RecursiveAddCoins(unsigned int Total, unsigned int &CoinCount, unsigned int& Value)
 {
 	if (Value + Coin::Penny10 <= Total)
 	{
-		IncreamentPennys(CoinCount, Value, Coin::Penny10);
+		IncrementPennys(CoinCount, Value, Coin::Penny10);
 		RecursiveAddCoins(Total, CoinCount, Value);
 		return CoinCount;// to avoid unnecesary if's 
 	}
 	else	if (Value + Coin::Penny5 <= Total)
 	{
-		IncreamentPennys(CoinCount, Value, Coin::Penny5);
+		IncrementPennys(CoinCount, Value, Coin::Penny5);
 		RecursiveAddCoins(Total, CoinCount, Value);
 		return CoinCount;
 	}
 	else	if (Value + Coin::Penny2 <= Total)
 	{
-		IncreamentPennys(CoinCount, Value, Coin::Penny2);
+		IncrementPennys(CoinCount, Value, Coin::Penny2);
 		RecursiveAddCoins(Total, CoinCount, Value);
 		return CoinCount;
 	}
 	else	if (Value + Coin::Penny <= Total)
 	{
-		IncreamentPennys(CoinCount, Value, Coin::Penny);
+		IncrementPennys(CoinCount, Value, Coin::Penny);
 		RecursiveAddCoins(Total, CoinCount, Value);
 		return CoinCount;
 	}
@@ -84,14 +84,11 @@ unsigned int IterativeAddCoins(unsigned int Total, unsigned int &CoinCount, unsi
 	return CoinCount;
 }
 
-
 void Stop()
 {
 	std::cin.ignore();
 	std::cin.get();
 }
-
-
 
 int main()
 {
@@ -112,7 +109,3 @@ int main()
 
 	return 0;
 }
-
-
-
-
