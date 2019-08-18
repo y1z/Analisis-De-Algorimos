@@ -8,7 +8,7 @@
 //#include "Sorting_Header.h"
 #include "Search_Header.h"
 #include "Sorting_Header.h"
-#include "SortingClass.h"
+#include "..//..//Extra/SortingClass.h"
 
 /*! my own type def of a function pointer */
 using FunctionPointer = void(*)(std::vector<int>&);
