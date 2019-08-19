@@ -85,17 +85,17 @@ int main()
 
 	std::vector<float> RandomFloats = GenerateVectorRandomOrderF(300, 300);
 
-	
-//	Sorter.InsertionSort(Ascendant);
-//	Sorter.InsertionSort(Descendant);
-//	Sorter.InsertionSort(Random);
+	Sorter.RadixSort(Ascendant);
+	Sorter.RadixSort(Descendant);
+	Sorter.RadixSort(Random);
 
 	//Sorter.HeapSort(Ascendant, 0, Ascendant.size() - 1);
 	//Sorter.HeapSort(Descendant,0, Descendant.size() - 1);
 	//Sorter.HeapSort(Random,0, Random.size() - 1);
 
 
-	Sorter.BucketSort(RandomFloats);
+	//Sorter.BucketSort(RandomFloats);
+
 
 	if (std::is_sorted(Ascendant.begin(), Ascendant.end()))
 	{
@@ -112,17 +112,18 @@ int main()
 		printf("Random Array is sorted \n\n");
 	}
 
-	if(std::is_sorted(RandomFloats.begin(),RandomFloats.end()))
-	{
-		printf("Random float Array is sorted \n\n");
-	}
-	std::cout << "after Sorting : ";
+	PrintVector(Ascendant);
+	std::cout << "\n---------------------------------\n";
+	PrintVector(Descendant);
+	std::cout << "\n---------------------------------\n";
+	PrintVector(Random);
 
-	for (auto Element : RandomFloats)
-	{
-		std::cout << "[" << Element << "]";
-	}
-	std::cout << "\n---------------\n" << std::endl;
+	
+	//if(std::is_sorted(RandomFloats.begin(),RandomFloats.end()))
+	//{
+	//	printf("Random float Array is sorted \n\n");
+	//}
+	//std::cout << "after Sorting : ";
 
 	Stop();
 
